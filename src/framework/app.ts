@@ -1,6 +1,6 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
-import { routes }  from './app.routes';
+import { routes }  from '../app/app.routes';
 import { logger } from '../utils/logger';
 import * as koaBody from 'koa-body';
 

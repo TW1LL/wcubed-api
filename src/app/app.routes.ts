@@ -1,5 +1,5 @@
 import ProductController from './controllers/product.controller';
-import { Routes } from '../utils/routes';
+import { Routes } from '../framework/routes';
 
 
 

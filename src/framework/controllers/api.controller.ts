@@ -1,9 +1,15 @@
 import Client from 'davenport';
 import { logger } from '../../utils/logger';
+import { IApiController } from './api.controller.interface';
+import { ICustomRoute } from '../routes';
+import { Context } from 'koa';
+
 declare function emit(name: any, doc: any);
-export class ApiController<T> {
+
+export class ApiController<T> implements IApiController {
     protected dbName: string;
     protected db: Client<T>;
+    customRoutes: ICustomRoute[];
     constructor(dbName: string) {
         let db = new Client<T>('http://127.0.0.1:5984/', dbName);
         this.db = db;
@@ -11,7 +17,7 @@ export class ApiController<T> {
     }
     
     getAll = async (ctx: Context) => {
-       let body = await this.db.view(dbName, 'all');
+       let body = await this.db.view(this.dbName, 'all');
        ctx.body = this.send(body.rows);
     }
     
@@ -29,7 +35,7 @@ export class ApiController<T> {
     
     patch = (ctx: Context) => {
         // TODO: do couchDB stuff       
-        ctx.body = this.send(new Product());
+        ctx.body = this.send({});
     }
     
     delete = (ctx: Context) => {
@@ -40,5 +46,4 @@ export class ApiController<T> {
     send(obj: any): string {
         return JSON.stringify(obj);
     }
-    
 }

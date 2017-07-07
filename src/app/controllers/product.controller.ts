@@ -1,14 +1,13 @@
 import { Product } from '../models/product';
-import { IApiController } from '../controllers/interfaces/iapi.controller';
-import { ApiController } from '../controllers/api.controller';
-import { Context } from 'koa';
+import { ApiController } from '../../framework/controllers/api.controller';
 import { logger } from '../../utils/logger';
 import Client, { CouchDoc } from "davenport";
 
 
-export default class ProductController extends ApiController<Product> implements IApiController {
+export default class ProductController extends ApiController<Product> {
     constructor() {
         super('products');
+        
     }
     
 }
