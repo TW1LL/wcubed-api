@@ -1,6 +1,6 @@
 export class Package {
-    name: string;
-    length: number;
-    width: number;
-    height?: number;
+    public name: string;
+    public length: number;
+    public width: number;
+    public height?: number;
 }

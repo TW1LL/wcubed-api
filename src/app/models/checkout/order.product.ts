@@ -1,19 +1,18 @@
-import {IProduct} from "../interfaces/product.interface";
-import {Category} from "../cart/category";
-import {Weight} from "../cart/weight";
-import {Package} from "../cart/package";
-import {OrderShipment} from "./order.shipment";
+import {Category} from '../cart/category';
+import {Package} from '../cart/package';
+import {Weight} from '../cart/weight';
+import {IProduct} from '../interfaces/product.interface';
+import {OrderShipment} from './order.shipment';
 export class OrderProduct implements IProduct {
-    name: string;
-    category: Category;
-    description: string;
-    price: number;
-    weight: Weight;
-    digital: boolean;
+    public name: string;
+    public category: Category;
+    public description: string;
+    public price: number;
+    public weight: Weight;
+    public digital: boolean;
 
-    quantity: number;
-    packaging: Package;
+    public quantity: number;
+    public packaging: Package;
 
-    shipment: OrderShipment;
-
+    public shipment: OrderShipment;
 }

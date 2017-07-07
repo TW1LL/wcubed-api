@@ -1,26 +1,25 @@
 import {CouchDoc} from 'davenport';
-import {Weight} from "./weight";
-import {Package} from "./package";
-import {Category} from "./category";
-import {IProduct} from "../interfaces/product.interface";
+import {IProduct} from '../interfaces/product.interface';
+import {Category} from './category';
+import {Package} from './package';
+import {Weight} from './weight';
 
 export class Product implements CouchDoc, IProduct {
-    _id: string;
-    _rev: string;
+    /* tslint:disable */
+    public _id: string;
+    public _rev: string;
+    /* tslint:enable */
+    public name: string;
+    public category: Category;
+    public description: string;
+    public price: number;
+    public weight: Weight;
+    public digital: boolean;
 
-    name: string;
-    category: Category;
-    description: string;
-    price: number;
-    weight: Weight;
-    digital: boolean;
-
-    onHand: number;
-    hidden: boolean;
-    productionTime: number;
-    packaging: Package[];
-    thumbnail: string;
-    images: string[];
-
-
+    public onHand: number;
+    public hidden: boolean;
+    public productionTime: number;
+    public packaging: Package[];
+    public thumbnail: string;
+    public images: string[];
 }

@@ -1,49 +1,48 @@
 import Client from 'davenport';
-import { logger } from '../../utils/logger';
-import { IApiController } from './api.controller.interface';
-import { ICustomRoute } from '../routes';
-import { Context } from 'koa';
+import {Context} from 'koa';
+import {logger} from '../../utils/logger';
+import {ICustomRoute} from '../routes';
+import {IApiController} from './api.controller.interface';
 
 declare function emit(name: any, doc: any);
 
 export class ApiController<T> implements IApiController {
+    public customRoutes: ICustomRoute[];
     protected dbName: string;
     protected db: Client<T>;
-    customRoutes: ICustomRoute[];
     constructor(dbName: string) {
-        let db = new Client<T>('http://127.0.0.1:5984/', dbName);
-        this.db = db;
+        this.db = new Client<T>('http://127.0.0.1:5984/', dbName);
         this.dbName = dbName;
     }
-    
-    getAll = async (ctx: Context) => {
-       let body = await this.db.view(this.dbName, 'all');
+
+    public getAll = async (ctx: Context) => {
+       const body = await this.db.view(this.dbName, 'all');
        ctx.body = this.send(body.rows);
-    };
-    
-    get = async (ctx: Context) => {
-        let body = await this.db.get(ctx.params.id);
+    }
+
+    public get = async (ctx: Context) => {
+        const body = await this.db.get(ctx.params.id);
         ctx.body = this.send(body);
-    };
-    
-    post = async (ctx: Context) => {
+    }
+
+    public post = async (ctx: Context) => {
         logger.log(ctx.request.body);
-        let res = await this.db.post(ctx.request.body);
+        const res = await this.db.post(ctx.request.body);
         ctx.body = this.send(!!res);
-       
-    };
-    
-    patch = (ctx: Context) => {
+
+    }
+
+    public patch = (ctx: Context) => {
         // TODO: do couchDB stuff       
         ctx.body = this.send({});
-    };
-    
-    delete = (ctx: Context) => {
+    }
+
+    public delete = (ctx: Context) => {
         // TODO: do couchDB stuff    
         ctx.body = this.send(true);
-    };
-    
-    send(obj: any): string {
+    }
+
+    public send(obj: any): string {
         return JSON.stringify(obj);
     }
 }

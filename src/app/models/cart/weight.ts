@@ -1,4 +1,4 @@
 export class Weight {
-    value: number;
-    type: string;
+    public value: number;
+    public type: string;
 }

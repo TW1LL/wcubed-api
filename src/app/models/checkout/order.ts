@@ -1,15 +1,13 @@
-import {OrderProduct} from "./order.product";
-import {Address} from "cluster";
-import {Payment} from "./order.payment";
+import {Address} from 'cluster';
+import {Payment} from './order.payment';
+import {OrderProduct} from './order.product';
 export class Order {
-    userId: string;
-    products: OrderProduct[];
-    address: Address;
-    dateCreated: Date;
-    dateModified: Date;
-    description: string;
-    total: number;
-    payment: Payment;
-
+    public userId: string;
+    public products: OrderProduct[];
+    public address: Address;
+    public dateCreated: Date;
+    public dateModified: Date;
+    public description: string;
+    public total: number;
+    public payment: Payment;
 }
-

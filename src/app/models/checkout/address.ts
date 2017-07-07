@@ -1,14 +1,14 @@
 export class Address {
-    userId: string;
-    firstName: string;
-    lastName: string;
-    companyName?: string;
-    streetAddress: string;
-    streetAddress2?: string;
-    city: string;
-    state: string;
-    zipcode: string;
-    country: string;
-    phone: string;
-    email: string;
+    public userId: string;
+    public firstName: string;
+    public lastName: string;
+    public companyName?: string;
+    public streetAddress: string;
+    public streetAddress2?: string;
+    public city: string;
+    public state: string;
+    public zipCode: string;
+    public country: string;
+    public phone: string;
+    public email: string;
 }

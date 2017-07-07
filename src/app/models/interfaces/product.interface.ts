@@ -1,5 +1,5 @@
-import {Weight} from "../cart/weight";
-import {Category} from "../cart/category";
+import {Category} from '../cart/category';
+import {Weight} from '../cart/weight';
 export interface IProduct {
     name: string;
     category: Category;
@@ -8,4 +8,3 @@ export interface IProduct {
     weight: Weight;
     digital: boolean;
 }
-

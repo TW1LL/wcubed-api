@@ -1,5 +1,5 @@
 export class Category {
-    name: string;
-    description: string;
-    thumbnail: string;
+    public name: string;
+    public description: string;
+    public thumbnail: string;
 }

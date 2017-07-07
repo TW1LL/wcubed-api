@@ -1,5 +1,5 @@
 import * as Router from 'koa-router';
-import { IApiController } from '../framework/controllers/api.controller.interface';
+import {IApiController} from './controllers/api.controller.interface';
 
 interface IRoute {
     path: string;
@@ -8,36 +8,36 @@ interface IRoute {
 
 export interface ICustomRoute {
     method: string;
-    path: string,
-    fn: any
+    path: string;
+    fn: any;
 }
 export class Routes {
-    routeList: IRoute[];
+    public routeList: IRoute[];
     constructor(routeList: IRoute[]) {
         this.routeList = routeList;
     }
-    setRoutes(router: Router) {
+    public setRoutes(router: Router) {
         this.routeList.forEach((route: IRoute) => {
             router.get(route.path, route.controller.getAll);
-            router.get(route.path + "/:id", route.controller.get);
+            router.get(route.path + '/:id', route.controller.get);
             router.post(route.path, route.controller.post);
             router.patch(route.path, route.controller.patch);
             router.delete(route.path, route.controller.delete);
-            if(route.controller.customRoutes) {
-                route.controller.customRoutes.forEach((route: ICustomRoute) => {
-                    if(route.method === "get") {
-                        router.get(route.path, route.fn);
+            if (route.controller.customRoutes) {
+                route.controller.customRoutes.forEach((rte: ICustomRoute) => {
+                    if (rte.method === 'get') {
+                        router.get(rte.path, rte.fn);
                     }
-                    if(route.method === "post") {
-                        router.post(route.path, route.fn);
+                    if (rte.method === 'post') {
+                        router.post(rte.path, rte.fn);
                     }
-                    if(route.method === "patch") {
-                        router.patch(route.path, route.fn);
+                    if (rte.method === 'patch') {
+                        router.patch(rte.path, rte.fn);
                     }
-                    if(route.method === "delete") {
-                        router.delete(route.path, route.fn);
+                    if (rte.method === 'delete') {
+                        router.delete(rte.path, rte.fn);
                     }
-                })
+                });
             }
         });
         return router;

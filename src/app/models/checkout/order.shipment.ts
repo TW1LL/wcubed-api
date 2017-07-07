@@ -1,6 +1,6 @@
 export class OrderShipment {
-    id: string;
-    label: string;
-    tracking: string;
-    shipped: boolean;
+    public id: string;
+    public label: string;
+    public tracking: string;
+    public shipped: boolean;
 }

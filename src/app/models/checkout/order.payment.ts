@@ -1,5 +1,5 @@
 export class Payment {
-    id: string;
-    amount: number;
-    balanceTrans: string;
+    public id: string;
+    public amount: number;
+    public balanceTrans: string;
 }
