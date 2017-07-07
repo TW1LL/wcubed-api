@@ -6,16 +6,16 @@ class Logger {
     constructor() {
         this.console = new Console(process.stdout, process.stderr);
     }
-    public debug(text: string) {
+    public debug(text: any) {
         this.console.log(this.getTime, '>>', text);
     }
-    public info(text: string) {
+    public info(text: any) {
         this.console.info(this.getTime, '>>', text);
     }
-    public error(text: string) {
+    public error(text: any) {
         this.console.error(this.getTime, '>>', text);
     }
-    public log(text: string) {
+    public log(text: any) {
         this.console.log(this.getTime, '>>', text);
     }
     private get getTime() {

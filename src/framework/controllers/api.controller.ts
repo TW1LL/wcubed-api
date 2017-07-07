@@ -5,13 +5,13 @@ import {ICustomRoute} from '../routes';
 import {IApiController} from './api.controller.interface';
 
 declare function emit(name: any, doc: any);
-
+export const couchDbUrl = 'http://127.0.0.1:5984/';
 export class ApiController<T> implements IApiController {
     public customRoutes: ICustomRoute[];
     protected dbName: string;
     protected db: Client<T>;
     constructor(dbName: string) {
-        this.db = new Client<T>('http://127.0.0.1:5984/', dbName);
+        this.db = new Client<T>(couchDbUrl, dbName);
         this.dbName = dbName;
     }
 

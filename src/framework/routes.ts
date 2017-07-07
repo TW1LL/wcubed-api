@@ -1,4 +1,5 @@
 import * as Router from 'koa-router';
+import {logger} from '../utils/logger';
 import {IApiController} from './controllers/api.controller.interface';
 
 interface IRoute {
@@ -26,6 +27,7 @@ export class Routes {
             if (route.controller.customRoutes) {
                 route.controller.customRoutes.forEach((rte: ICustomRoute) => {
                     if (rte.method === 'get') {
+                        logger.debug(rte);
                         router.get(rte.path, rte.fn);
                     }
                     if (rte.method === 'post') {
