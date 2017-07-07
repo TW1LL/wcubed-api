@@ -1,0 +1,32 @@
+{
+  "name": "wcubed-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cradle": "^0.7.1",
+    "davenport": "^2.6.0",
+    "koa": "^2.3.0",
+    "koa-body": "^2.3.0",
+    "koa-router": "^7.2.1"
+  },
+  "devDependencies": {
+    "@types/cradle": "0.0.30",
+    "@types/koa": "^2.0.39",
+    "@types/koa-router": "^7.0.22",
+    "typescript": "^2.4.1"
+  },
+  "scripts": {
+    "start": "node build/app/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TW1LL/wcubed-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TW1LL/wcubed-api/issues"
+  },
+  "homepage": "https://github.com/TW1LL/wcubed-api#readme"
+}
