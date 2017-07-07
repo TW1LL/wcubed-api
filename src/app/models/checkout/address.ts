@@ -1,5 +1,4 @@
 export class Address {
-    public userId: string;
     public firstName: string;
     public lastName: string;
     public companyName?: string;
