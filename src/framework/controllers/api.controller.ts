@@ -19,29 +19,29 @@ export class ApiController<T> implements IApiController {
     getAll = async (ctx: Context) => {
        let body = await this.db.view(this.dbName, 'all');
        ctx.body = this.send(body.rows);
-    }
+    };
     
     get = async (ctx: Context) => {
         let body = await this.db.get(ctx.params.id);
         ctx.body = this.send(body);
-    }
+    };
     
     post = async (ctx: Context) => {
         logger.log(ctx.request.body);
         let res = await this.db.post(ctx.request.body);
-        ctx.body = this.send(res ? true : false);
+        ctx.body = this.send(!!res);
        
-    }
+    };
     
     patch = (ctx: Context) => {
         // TODO: do couchDB stuff       
         ctx.body = this.send({});
-    }
+    };
     
     delete = (ctx: Context) => {
         // TODO: do couchDB stuff    
         ctx.body = this.send(true);
-    }
+    };
     
     send(obj: any): string {
         return JSON.stringify(obj);
