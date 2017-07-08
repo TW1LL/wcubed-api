@@ -14,7 +14,6 @@ export class OrderItem {
     public quantity: number;
 
     // public packaging: Package;
-
     // public shipment: OrderShipment;
 
     @ManyToOne((type) => Order, (order) => order.items)

@@ -1,8 +1,8 @@
 import {Connection} from 'typeorm';
 import {ApiController} from '../../framework/controllers/api.controller';
-import {Order} from '../models/checkout/order';
-export default class OrderController extends ApiController<Order> {
+import {User} from '../models/account/user';
+export class UserController extends ApiController<User> {
     constructor(db: Connection) {
-        super(db, 'orders', Order);
+        super(db, 'user', User);
     }
 }

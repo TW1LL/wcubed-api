@@ -1,4 +1,4 @@
-import {Column, CreateDateColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import {Column, CreateDateColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
 import {Embedded} from 'typeorm/decorator/Embedded';
 import {Entity} from 'typeorm/decorator/entity/Entity';
 import {Address} from './address';
@@ -17,7 +17,7 @@ export class Order {
     @ManyToOne((type) => OrderItem, (orderItem) => orderItem.order)
     public items: OrderItem[];
 
-    @Embedded((type) => Address)
+    @OneToMany((type) => Address, (address) => address.orders)
     public address: Address;
 
     @CreateDateColumn()

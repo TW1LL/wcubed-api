@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {OrderItem} from '../checkout/order.item';
 import {IProduct} from '../interfaces/product.interface';
 import {Category} from './category';
@@ -43,7 +43,7 @@ export class Product implements IProduct {
     @Column('text')
     public images: string;
 
-    @ManyToMany((type) => OrderItem, (orderProduct) => orderProduct.product)
+    @ManyToOne((type) => OrderItem, (orderProduct) => orderProduct.product)
     public orderProducts: OrderItem[];
 
 }

@@ -1,8 +1,14 @@
-import {Column} from 'typeorm';
-import {EmbeddableEntity} from 'typeorm/decorator/entity/EmbeddableEntity';
-@EmbeddableEntity()
-
+import {Column, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Entity} from 'typeorm/decorator/entity/Entity';
+import {User} from '../account/user';
+import {Order} from './order';
+@Entity()
 export class Address {
+    @PrimaryGeneratedColumn()
+    public id: number;
+
+    @OneToMany((type) => User, (user) => user.addresses)
+    public user: User;
     @Column('varchar')
     public firstName: string;
     @Column('varchar')
@@ -25,4 +31,7 @@ export class Address {
     public phone: string;
     @Column('varchar')
     public email: string;
+
+    @OneToMany((type) => Order, (order) => order.address)
+    public orders: Order[];
 }
