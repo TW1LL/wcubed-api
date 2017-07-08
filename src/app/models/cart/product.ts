@@ -1,25 +1,49 @@
-import {CouchDoc} from 'davenport';
+import {Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {OrderItem} from '../checkout/order.item';
 import {IProduct} from '../interfaces/product.interface';
 import {Category} from './category';
-import {Package} from './package';
-import {Weight} from './weight';
 
-export class Product implements CouchDoc, IProduct {
-    /* tslint:disable */
-    public _id: string;
-    public _rev: string;
-    /* tslint:enable */
+@Entity()
+export class Product implements IProduct {
+    public static joins: string[] = ['category'];
+
+    @PrimaryGeneratedColumn()
+    public id: number;
+
+    @Column('varchar')
     public name: string;
+
+    @ManyToOne((type) => Category, (cat) => cat.products)
     public category: Category;
+
+    @Column('text')
     public description: string;
+
+    @Column('decimal')
     public price: number;
-    public weight: Weight;
+
+    @Column('decimal')
+    public weight: number;
+
+    @Column('varchar')
     public digital: boolean;
 
+    @Column('int')
     public onHand: number;
+
+    @Column('varchar')
     public hidden: boolean;
+
+    @Column('float')
     public productionTime: number;
-    public packaging: Package[];
+
+    @Column('varchar')
     public thumbnail: string;
-    public images: string[];
+
+    @Column('text')
+    public images: string;
+
+    @ManyToMany((type) => OrderItem, (orderProduct) => orderProduct.product)
+    public orderProducts: OrderItem[];
+
 }

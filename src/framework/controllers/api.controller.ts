@@ -1,48 +1,57 @@
-import Client from 'davenport';
 import {Context} from 'koa';
-import {logger} from '../../utils/logger';
+import 'reflect-metadata';
+import {Connection} from 'typeorm';
+
 import {ICustomRoute} from '../routes';
 import {IApiController} from './api.controller.interface';
 
-declare function emit(name: any, doc: any);
-export const couchDbUrl = 'http://127.0.0.1:5984/';
 export class ApiController<T> implements IApiController {
     public customRoutes: ICustomRoute[];
-    protected dbName: string;
-    protected db: Client<T>;
-    constructor(dbName: string) {
-        this.db = new Client<T>(couchDbUrl, dbName);
-        this.dbName = dbName;
+    protected type: any;
+    protected name: string;
+    protected db: any;
+    constructor(db: Connection, name: string, type: any) {
+        this.db = db.getRepository(type);
+        this.type = type;
+        this.name = name;
     }
 
     public getAll = async (ctx: Context) => {
-       const body = await this.db.view(this.dbName, 'all');
-       ctx.body = this.send(body.rows);
+        let query = this.db.createQueryBuilder(this.name);
+        if (this.type.joins) {
+            this.type.joins.forEach((join) => {
+                query = query.innerJoinAndSelect(this.name + '.' + join, join);
+            });
+        }
+        ctx.body = await query.getMany();
     }
 
     public get = async (ctx: Context) => {
-        const body = await this.db.get(ctx.params.id);
-        ctx.body = this.send(body);
+        let query = this.db.createQueryBuilder(this.name);
+        if (this.type.joins) {
+            this.type.joins.forEach((join) => {
+                query = query.innerJoinAndSelect(this.name + '.' + join, join);
+            });
+        }
+        query.where(this.name + '.id = ' + ctx.params.id + '');
+        ctx.body = await query.getOne();
     }
 
     public post = async (ctx: Context) => {
-        logger.log(ctx.request.body);
-        const res = await this.db.post(ctx.request.body);
-        ctx.body = this.send(!!res);
+        const res = await this.db.persist(ctx.request.body);
+        ctx.body = !!res;
 
     }
 
-    public patch = (ctx: Context) => {
-        // TODO: do couchDB stuff       
-        ctx.body = this.send({});
+    public patch = async (ctx: Context) => {
+        const res = await this.db.persist(ctx.request.body);
+        ctx.body = !!res;
     }
 
-    public delete = (ctx: Context) => {
-        // TODO: do couchDB stuff    
-        ctx.body = this.send(true);
+    public delete = async (ctx: Context) => {
+        const obj = await this.db.findOneById(ctx.params.id);
+        const res = await this.db.remove(obj);
+        ctx.body = !!res;
     }
 
-    public send(obj: any): string {
-        return JSON.stringify(obj);
-    }
 }

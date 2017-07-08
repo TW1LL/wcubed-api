@@ -23,23 +23,23 @@ export class Routes {
             router.get(route.path + '/:id', route.controller.get);
             router.post(route.path, route.controller.post);
             router.patch(route.path, route.controller.patch);
-            router.delete(route.path, route.controller.delete);
+            router.delete(route.path + '/:id', route.controller.delete);
             if (route.controller.customRoutes) {
-                route.controller.customRoutes.forEach((rte: ICustomRoute) => {
-                    if (rte.method === 'get') {
-                        logger.debug(rte);
-                        router.get(rte.path, rte.fn);
-                    }
-                    if (rte.method === 'post') {
-                        router.post(rte.path, rte.fn);
-                    }
-                    if (rte.method === 'patch') {
-                        router.patch(rte.path, rte.fn);
-                    }
-                    if (rte.method === 'delete') {
-                        router.delete(rte.path, rte.fn);
-                    }
-                });
+                    route.controller.customRoutes.forEach((rte: ICustomRoute) => {
+                        if (rte.method === 'get') {
+                            logger.debug(rte);
+                            router.get(rte.path, rte.fn);
+                        }
+                        if (rte.method === 'post') {
+                            router.post(rte.path, rte.fn);
+                        }
+                        if (rte.method === 'patch') {
+                            router.patch(rte.path, rte.fn);
+                        }
+                        if (rte.method === 'delete') {
+                            router.delete(rte.path, rte.fn);
+                        }
+                    });
             }
         });
         return router;

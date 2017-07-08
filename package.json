@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "davenport": "^2.6.0",
     "koa": "^2.3.0",
     "koa-body": "^2.3.0",
-    "koa-router": "^7.2.1"
+    "koa-router": "^7.2.1",
+    "mysql": "^2.13.0",
+    "reflect-metadata": "^0.1.10",
+    "typeorm": "0.1.0-alpha.31"
   },
   "devDependencies": {
     "@types/koa": "^2.0.39",
     "@types/koa-router": "^7.0.22",
+    "@types/node": "^8.0.9",
     "tslint": "^5.5.0",
     "typescript": "^2.4.1"
   },

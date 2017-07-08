@@ -1,13 +1,37 @@
-import {Address} from 'cluster';
+import {Column, CreateDateColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import {Embedded} from 'typeorm/decorator/Embedded';
+import {Entity} from 'typeorm/decorator/entity/Entity';
+import {Address} from './address';
+import {OrderItem} from './order.item';
 import {Payment} from './order.payment';
-import {OrderProduct} from './order.product';
+@Entity()
 export class Order {
+    public static joins: string[] = ['products'];
+
+    @PrimaryGeneratedColumn()
+    public id: number;
+
+    @Column('varchar')
     public userId: string;
-    public products: OrderProduct[];
+
+    @ManyToOne((type) => OrderItem, (orderItem) => orderItem.order)
+    public items: OrderItem[];
+
+    @Embedded((type) => Address)
     public address: Address;
+
+    @CreateDateColumn()
     public dateCreated: Date;
+
+    @UpdateDateColumn()
     public dateModified: Date;
+
+    @Column('text')
     public description: string;
+
+    @Column('decimal')
     public total: number;
+
+    @Embedded((type) => Payment)
     public payment: Payment;
 }

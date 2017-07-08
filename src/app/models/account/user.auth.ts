@@ -1,5 +1,4 @@
-import {CouchDoc} from 'davenport';
-export class UserAuth implements CouchDoc {
+export class UserAuth {
     /* tslint:disable */
     public _id: string;
     public _rev: string;
