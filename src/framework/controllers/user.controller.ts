@@ -8,7 +8,7 @@ import {ApiController} from './api.controller';
 export class UserController extends ApiController<User> {
     constructor(db: Connection) {
         super(db, 'user', User);
-        this.customRoutes = [
+        this.routes = [
             {
                 method: 'post',
                 path: '/user/login',
@@ -25,9 +25,14 @@ export class UserController extends ApiController<User> {
                 fn: this.changePassword
             },
             {
-                method: 'changeRank',
+                method: 'patch',
                 path: '/user/rank',
                 fn: this.changeRank
+            },
+            {
+                method: 'post',
+                path: '/user/address',
+                fn: this.addAddress
             }
         ];
     }
@@ -91,7 +96,7 @@ export class UserController extends ApiController<User> {
         if (valid) {
             const user = (userToken.id === ctx.request.body.id) ?
                 userToken :
-                this.userAuth.findOneById(ctx.request.body.id);
+                await this.userAuth.findOneById(ctx.request.body.id);
             user.rank = ctx.request.body.rank;
             const res = await this.userAuth.persist(user);
             ctx.body = !!res;
@@ -99,5 +104,25 @@ export class UserController extends ApiController<User> {
             ctx.body = false;
         }
 
+    }
+
+    public addAddress = async (ctx: Context) => {
+        const [valid, userToken] = await new Auth(ctx, this.userAuth).authorized(rankTitle.User);
+        if (valid) {
+            let userId ;
+            if (!ctx.request.body.id || userToken.id === ctx.request.body.id) {
+                userId = userToken.id;
+            } else if (userToken.rank >= rankTitle.Admin) {
+                userId = ctx.request.body.id;
+            } else {
+                userId = false;
+            }
+            const user = await this.db.findOneById(userId);
+            user.addresses.push(ctx.request.body.address);
+            const res = await this.db.persist(user);
+            ctx.body = !!res;
+        } else {
+            ctx.body = false;
+        }
     }
 }

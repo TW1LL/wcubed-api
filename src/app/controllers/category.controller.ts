@@ -5,7 +5,7 @@ import {Category} from '../models/cart/category';
 export default class CategoryController extends ApiController<Category> {
     constructor(db: Connection) {
         super(db, 'category', Category);
-        this.customRoutes = [{
+        this.routes = [{
             method: 'get',
             path: '/category/cnc',
             fn: this.cnc

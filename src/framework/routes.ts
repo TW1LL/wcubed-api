@@ -23,8 +23,8 @@ export class Routes {
             router.post(route.path, route.controller.post);
             router.patch(route.path, route.controller.patch);
             router.delete(new RegExp(route.path + '/([0-9]+)'), route.controller.delete);
-            if (route.controller.customRoutes) {
-                route.controller.customRoutes.forEach((rte: ICustomRoute) => {
+            if (route.controller.routes) {
+                route.controller.routes.forEach((rte: ICustomRoute) => {
                     if (rte.method === 'get') {
                         router.get(rte.path, rte.fn);
                     }

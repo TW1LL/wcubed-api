@@ -9,7 +9,7 @@ import {ICustomRoute} from '../routes';
 import {IApiController} from './api.controller.interface';
 
 export class ApiController<T> implements IApiController {
-    public customRoutes: ICustomRoute[];
+    public routes: ICustomRoute[];
     protected type: any;
     protected name: string;
     protected db: any;
