@@ -19,10 +19,10 @@ export class Routes {
     public setRoutes(router: Router) {
         this.routeList.forEach((route: IRoute) => {
             router.get(route.path, route.controller.getAll);
-            router.get(route.path + '/:id', route.controller.get);
+            router.get(new RegExp(route.path + '/([0-9]+)'), route.controller.get);
             router.post(route.path, route.controller.post);
             router.patch(route.path, route.controller.patch);
-            router.delete(route.path + '/:id', route.controller.delete);
+            router.delete(new RegExp(route.path + '/([0-9]+)'), route.controller.delete);
             if (route.controller.customRoutes) {
                 route.controller.customRoutes.forEach((rte: ICustomRoute) => {
                     if (rte.method === 'get') {

@@ -2,7 +2,6 @@ import * as Koa from 'koa';
 import * as koaBody from 'koa-body';
 import * as Router from 'koa-router';
 import config from '../app/config';
-
 import {db} from '../utils/db';
 import {logger} from '../utils/logger';
 import {Routes} from './routes';

@@ -6,5 +6,6 @@
     "username": "wcubed",
     "password": "debucW0",
     "database": "wcubed"
-  }
+  },
+  "secret": "secretSauce"
 }

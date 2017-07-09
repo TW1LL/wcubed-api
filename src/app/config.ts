@@ -1,10 +1,10 @@
 import * as fs from 'fs';
+import {UserController} from '../framework/controllers/user.controller';
+import {User} from '../framework/models/account/user';
+import {UserAuth} from '../framework/models/account/user.auth';
 import CategoryController from './controllers/category.controller';
 import OrderController from './controllers/order.controller';
 import ProductController from './controllers/product.controller';
-import {UserController} from './controllers/user.controller';
-import {User} from './models/account/user';
-import {UserAuth} from './models/account/user.auth';
 import {Category} from './models/cart/category';
 import {Product} from './models/cart/product';
 import {Address} from './models/checkout/address';
@@ -52,7 +52,8 @@ class Config {
                 controller: UserController
             }
             ];
-        cfg.db.logging = { logQueries: true, logFailedQueryError: true };
+        cfg.db.logging = { logOnlyFailedQueries: true, logFailedQueryError: true };
+
         this.config = cfg;
         return cfg;
     }

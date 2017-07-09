@@ -1,6 +1,6 @@
 import {Column, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Entity} from 'typeorm/decorator/entity/Entity';
-import {User} from '../account/user';
+import {User} from '../../../framework/models/account/user';
 import {Order} from './order';
 @Entity()
 export class Address {

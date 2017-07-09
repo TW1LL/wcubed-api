@@ -8,16 +8,11 @@ export default class CategoryController extends ApiController<Category> {
         this.customRoutes = [{
             method: 'get',
             path: '/category/cnc',
-            fn: async (ctx: Context) => {
-                let query = this.db.createQueryBuilder(this.name);
-                if (this.type.joins) {
-                    this.type.joins.forEach((join) => {
-                        query = query.innerJoinAndSelect(this.name + '.' + join, join);
-                    });
-                }
-                query.where(this.name + '.name = "CNC Products"');
-                ctx.body = await query.getOne();
-            }
+            fn: this.cnc
         }];
+    }
+
+    public cnc = async (ctx: Context) => {
+        ctx.body = await this.query(true).where(this.where('name', 'CNC Products')).getOne();
     }
 }
