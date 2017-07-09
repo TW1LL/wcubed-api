@@ -13,6 +13,6 @@ export default class CategoryController extends ApiController<Category> {
     }
 
     public cnc = async (ctx: Context) => {
-        ctx.body = await this.query(true).where(this.where('name', 'CNC Products')).getOne();
+        ctx.body = await this.query(true).where(this.whereEqual('name', 'CNC Products')).getOne();
     }
 }
