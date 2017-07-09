@@ -16,12 +16,16 @@
     "@types/koa": "^2.0.39",
     "@types/koa-router": "^7.0.22",
     "@types/node": "^8.0.9",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-tslint": "^8.1.1",
+    "gulp-typescript": "^3.2.0",
+    "nodemon": "^1.11.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.1"
   },
   "scripts": {
-    "start": "node build/framework/app.js",
-    "tsc": "tsc --watch"
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
