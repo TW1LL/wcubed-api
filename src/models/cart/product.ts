@@ -1,10 +1,9 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {OrderItem} from '../checkout/order.item';
-import {IProduct} from '../interfaces/product.interface';
 import {Category} from './category';
 
 @Entity()
-export class Product implements IProduct {
+export class Product {
     public static joins: string[] = ['category'];
 
     @PrimaryGeneratedColumn()

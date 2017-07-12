@@ -3,11 +3,11 @@ var gulp = require('gulp'),
     ts = require('gulp-typescript'),
     tslint = require('gulp-tslint');
 
-var tsProject = ts.createProject('tsconfig.json');
+var tsProject = ts.createProject('tsconfig.json', {out: 'app.js'});
 
 gulp.task('compile', ['tslint'], function() {
     var tsResult = gulp.src('./src')
-        .pipe(tsProject(ts.reporter.nullReporter()));
+        .pipe(tsProject());
     return tsResult.js.pipe(gulp.dest('./build'));
 });
 gulp.task('tslint', function() {
@@ -24,6 +24,5 @@ gulp.task('default', ['compile'], function () {
         watch: './src',
         tasks: ['compile'],
         ext: 'ts html',
-        ignore: ['gulpfile.js']
     });
 });

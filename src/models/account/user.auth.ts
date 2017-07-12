@@ -1,5 +1,5 @@
 import {Column, JoinColumn, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
-import {Entity} from 'typeorm/decorator/entity/Entity';
+import {Entity} from 'typeorm';
 import {User} from './user';
 @Entity()
 export class UserAuth {

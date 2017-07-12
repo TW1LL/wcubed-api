@@ -4,7 +4,7 @@ import {Connection} from 'typeorm';
 import {SelectQueryBuilder} from 'typeorm/query-builder/SelectQueryBuilder';
 import {logger} from '../../utils/logger';
 import {Auth} from '../auth';
-import {rankTitle, UserAuth} from '../models/account/user.auth';
+import {rankTitle, UserAuth} from '../../models/account/user.auth';
 import {ICustomRoute} from '../routes';
 import {IApiController} from './api.controller.interface';
 
@@ -104,7 +104,6 @@ export class ApiController<T> implements IApiController {
         return this.column(column) + ' = "' + value + '"';
     }
     private join = (query) => {
-        logger.log('logging join');
         if (this.type.joins) {
             this.type.joins.forEach((join) => {
                 query = query.innerJoinAndSelect(this.name + '.' + join, join);

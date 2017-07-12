@@ -1,15 +1,15 @@
 import * as fs from 'fs';
 import {UserController} from '../framework/controllers/user.controller';
-import {User} from '../framework/models/account/user';
-import {UserAuth} from '../framework/models/account/user.auth';
+import {User} from '../models/account/user';
+import {UserAuth} from '../models/account/user.auth';
 import CategoryController from './controllers/category.controller';
 import OrderController from './controllers/order.controller';
 import ProductController from './controllers/product.controller';
-import {Category} from './models/cart/category';
-import {Product} from './models/cart/product';
-import {Address} from './models/checkout/address';
-import {Order} from './models/checkout/order';
-import {OrderItem} from './models/checkout/order.item';
+import {Category} from '../models/cart/category';
+import {Product} from '../models/cart/product';
+import {Address} from '../models/checkout/address';
+import {Order} from '../models/checkout/order';
+import {OrderItem} from '../models/checkout/order.item';
 
 class Config {
     private config: any;

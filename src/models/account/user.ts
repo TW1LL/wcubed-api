@@ -1,6 +1,6 @@
 import {Column, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {Entity} from 'typeorm/decorator/entity/Entity';
-import {Address} from '../../../app/models/checkout/address';
+import {Address} from '../checkout/address';
 
 @Entity()
 export class User {

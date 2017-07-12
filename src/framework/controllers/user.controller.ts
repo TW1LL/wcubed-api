@@ -2,8 +2,8 @@ import * as bcrypt from 'bcrypt-nodejs';
 import {Context} from 'koa';
 import {Connection} from 'typeorm';
 import {Auth} from '../auth';
-import {User} from '../models/account/user';
-import {rankTitle, UserAuth} from '../models/account/user.auth';
+import {User} from '../../models/account/user';
+import {rankTitle, UserAuth} from '../../models/account/user.auth';
 import {ApiController} from './api.controller';
 export class UserController extends ApiController<User> {
     constructor(db: Connection) {

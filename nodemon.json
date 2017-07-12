@@ -1,0 +1,7 @@
+{
+  "verbose": false,
+  "ignore": ["node_modules/**/node_modules", ".git"],
+  "watch": "./build/",
+  "ext": "js",
+  "delay": "1500"
+}

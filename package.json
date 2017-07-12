@@ -2,13 +2,15 @@
   "name": "wcubed-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "dependencies": {
+    "concurrently": "^3.5.0",
     "jsonwebtoken": "^7.4.1",
     "koa": "^2.3.0",
     "koa-body": "^2.3.0",
     "koa-router": "^7.2.1",
+    "koa2-cors": "^2.0.3",
     "mysql": "^2.13.0",
+    "nodemon": "^1.11.0",
     "reflect-metadata": "^0.1.10",
     "typeorm": "0.1.0-alpha.31"
   },
@@ -25,7 +27,7 @@
     "typescript": "^2.4.1"
   },
   "scripts": {
-    "start": "gulp"
+    "start": "concurrently  \"tsc --watch\" \"nodemon build\\app.js\" \"nodemon src\\models\\index.js --watch .\\src\\models -e ts \" "
   },
   "repository": {
     "type": "git",

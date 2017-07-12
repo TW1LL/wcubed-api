@@ -2,8 +2,8 @@ import * as jwt from 'jsonwebtoken';
 import {Context} from 'koa';
 import config from '../app/config';
 import {logger} from '../utils/logger';
-import {User} from './models/account/user';
-import {UserAuth} from './models/account/user.auth';
+import {User} from '../models/account/user';
+import {UserAuth} from '../models/account/user.auth';
 
 export class Auth {
     private ctx: Context;
