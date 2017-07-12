@@ -68,7 +68,7 @@ export class ApiController<T> implements IApiController {
     public delete = async (ctx: Context) => {
         const [valid, user] = await new Auth(ctx, this.userAuth).authorized(rankTitle.Admin);
         if (valid) {
-            const obj = await this.db.findOneById(ctx.params.id);
+            const obj = await this.db.findOneById(ctx.params[0]);
             const res = await this.db.remove(obj);
             ctx.body = !!res;
             if (ctx.body === true) {
