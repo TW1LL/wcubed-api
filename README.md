@@ -3,7 +3,7 @@
 ## prereqs
 
 ```
-    npm install -g gulp
+    npm install -g nodemon concurrently
     npm install
 ```
 
@@ -12,4 +12,7 @@
 ```
     npm start
 ```
-It will run a server, lint and compile typescript, and restart on changes
+It will 
+* compile and watch ts
+* run the server (restart on ts compile)
+* build models (rebuild on ts models compile)
