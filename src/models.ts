@@ -118,10 +118,10 @@ export enum rankTitle {
 
      export class OrderItem {
     constructor(id: number = 0, product: Product = null, quantity: number = null, order: Order = null) {
-        this.id = id;
         this.product = product;
         this.quantity = quantity;
         this.order = order;
+        this.id = id;
     }
          public id: number;
 
