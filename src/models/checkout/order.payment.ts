@@ -1,9 +1,13 @@
-import {Column} from 'typeorm';
-import {EmbeddableEntity} from 'typeorm/decorator/entity/EmbeddableEntity';
-@EmbeddableEntity()
+import {Column, PrimaryGeneratedColumn} from 'typeorm';
+import {Entity} from 'typeorm';
+@Entity()
 export class Payment {
-    @Column('varchar')
+    @PrimaryGeneratedColumn()
     public id: string;
+
+    @Column('varchar')
+    public paymentId: string;
+
     @Column('decimal')
     public amount: number;
     @Column('text')

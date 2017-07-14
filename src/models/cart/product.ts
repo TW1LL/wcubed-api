@@ -1,6 +1,7 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {OrderItem} from '../checkout/order.item';
 import {Category} from './category';
+import {Package} from './package';
 
 @Entity()
 export class Product {
@@ -9,11 +10,18 @@ export class Product {
     @PrimaryGeneratedColumn()
     public id: number;
 
+    @ManyToOne((type) => Category, (category) => category.products)
+    public category: Category;
+
+    @ManyToMany((type) => Package)
+    @JoinTable()
+    public packaging: Package[];
+
+    @OneToMany((type) => OrderItem, (orderItem) => orderItem.product)
+    public orderItems: OrderItem[];
+
     @Column('varchar')
     public name: string;
-
-    @ManyToOne((type) => Category, (cat) => cat.products)
-    public category: Category;
 
     @Column('text')
     public description: string;
@@ -42,7 +50,6 @@ export class Product {
     @Column('text')
     public images: string;
 
-    @ManyToOne((type) => OrderItem, (orderProduct) => orderProduct.product)
-    public orderProducts: OrderItem[];
+
 
 }

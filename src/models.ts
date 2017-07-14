@@ -43,24 +43,30 @@ export enum rankTitle {
          public products: Product[];
 }
 
-  export class Package {
+   export class Package {
          public id: number;
          public name: string;
          public length: number;
          public width: number;
          public height?: number;
 
+         public orderItems: OrderItem[];
+
 }
 
-   
+    
  export class Product {
     public static joins: string[] = ['category'];
 
          public id: number;
 
-         public name: string;
-
          public category: Category;
+
+              public packaging: Package[];
+
+         public orderItems: OrderItem[];
+
+         public name: string;
 
          public description: string;
 
@@ -80,7 +86,7 @@ export enum rankTitle {
 
          public images: string;
 
-         public orderProducts: OrderItem[];
+
 
 }
 
@@ -89,6 +95,8 @@ export enum rankTitle {
          public id: number;
 
          public user: User;
+
+         public orders: Order[];
 
          public firstName: string;
 
@@ -112,45 +120,52 @@ export enum rankTitle {
 
          public email: string;
 
-         public orders: Order[];
 
 }
 
-     export class OrderItem {
-    constructor(id: number = 0, product: Product = null, quantity: number = null, order: Order = null) {
+       export class OrderItem {
+    constructor(id: number = 0, product: Product = null, quantity: number = null) {
         this.product = product;
         this.quantity = quantity;
-        this.order = order;
         this.id = id;
     }
-         public id: number;
 
-         public product: Product;
+         public id: number;
 
          public quantity: number;
 
-    // public packaging: Package;
-    // public shipment: OrderShipment;
+              public product: Product;
 
-         public order: Order;
+              public packaging: Package;
+
+              public shipment: OrderShipment;
+
+              public order: Order;
+
+
 }
 
    export class Payment {
          public id: string;
+
+         public paymentId: string;
+
          public amount: number;
          public balanceTrans: string;
 }
 
     export class OrderShipment {
          public id: string;
+
          public label: string;
+
          public tracking: string;
+
          public shipped: boolean;
 
-         public order: Order;
 }
 
-         export class Order {
+       export class Order {
     public static joins: string[] = ['products'];
 
          public id: number;
@@ -161,7 +176,7 @@ export enum rankTitle {
 
          public address: Address;
 
-         public shipments: OrderShipment[];
+         public payment: Payment;
 
          public dateCreated: Date;
 
@@ -170,8 +185,6 @@ export enum rankTitle {
          public description: string;
 
          public total: number;
-
-         public payment: Payment;
 
 }
 

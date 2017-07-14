@@ -11,7 +11,7 @@ export class User {
     @Column('varchar')
     public email: string;
 
-    @ManyToOne((type) => Address, (address) => address.user)
+    @OneToMany((type) => Address, (address) => address.user)
     public addresses: Address[];
 
     @OneToMany((type) => Order, (order) => order.user)

@@ -12,6 +12,8 @@ import {Order} from '../models/checkout/order';
 import {OrderItem} from '../models/checkout/order.item';
 import {OrderShipment} from '../models/checkout/order.shipment';
 import ShipmentController from './controllers/shipment.controller';
+import {Package} from '../models/cart/package';
+import {Payment} from '../models/checkout/order.payment';
 
 class Config {
     private config: any;
@@ -34,7 +36,10 @@ class Config {
             User,
             UserAuth,
             Address,
-        OrderShipment];
+            Package,
+            Payment,
+            OrderShipment
+        ];
 
         // Routes for controllers of models
         cfg.routes = [

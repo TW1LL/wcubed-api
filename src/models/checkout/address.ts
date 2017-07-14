@@ -1,4 +1,4 @@
-import {Column, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Entity} from 'typeorm/decorator/entity/Entity';
 import {User} from '../account/user';
 import {Order} from './order';
@@ -7,8 +7,11 @@ export class Address {
     @PrimaryGeneratedColumn()
     public id: number;
 
-    @OneToMany((type) => User, (user) => user.addresses)
+    @ManyToOne((type) => User, (user) => user.addresses)
     public user: User;
+
+    @OneToMany((type) => Order, (order) => order.address)
+    public orders: Order[];
 
     @Column('varchar')
     public firstName: string;
@@ -43,7 +46,5 @@ export class Address {
     @Column('varchar')
     public email: string;
 
-    @OneToMany((type) => Order, (order) => order.address)
-    public orders: Order[];
 
 }
