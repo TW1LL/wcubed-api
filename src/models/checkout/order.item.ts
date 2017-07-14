@@ -4,6 +4,11 @@ import {Product} from '../cart/product';
 import {Order} from './order';
 @Entity()
 export class OrderItem {
+    constructor(product: Product = null, quantity: number = null, order: Order = null) {
+        this.product = product;
+        this.quantity = quantity;
+        this.order = order;
+    }
     @PrimaryGeneratedColumn()
     public id: number;
 

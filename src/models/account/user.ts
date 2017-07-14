@@ -1,6 +1,7 @@
-import {Column, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Entity} from 'typeorm/decorator/entity/Entity';
 import {Address} from '../checkout/address';
+import {Order} from '../checkout/order';
 
 @Entity()
 export class User {
@@ -13,4 +14,6 @@ export class User {
     @ManyToOne((type) => Address, (address) => address.user)
     public addresses: Address[];
 
+    @OneToMany((type) => Order, (order) => order.user)
+    public orders: Order[];
 }

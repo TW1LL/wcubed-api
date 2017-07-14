@@ -39,7 +39,7 @@ export class Auth {
             return jwt.sign(data, this.config.secret, { expiresIn: '8h' });
         } catch (err) {
             logger.error(err);
-            return 'error';
+            return null;
         }
     }
 

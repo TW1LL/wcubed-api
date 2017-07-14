@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "@easypost/api": "^3.0.12",
     "concurrently": "^3.5.0",
     "jsonwebtoken": "^7.4.1",
     "koa": "^2.3.0",

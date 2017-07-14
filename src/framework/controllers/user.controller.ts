@@ -42,12 +42,19 @@ export class UserController extends ApiController<User> {
         if (usr) {
             const userAuth = await this.userAuth.findOneById(usr.id);
             if (bcrypt.compareSync(ctx.request.body.password, userAuth.password)) {
-                ctx.body = new Auth(ctx, this.userAuth).authorize(usr);
+                const token = new Auth(ctx, this.userAuth).authorize(usr);
+                ctx.body = {
+                    result: true,
+                    token: token,
+                    user: usr
+                };
             } else {
-                ctx.body = false;
+                ctx.body = {
+                    result: false
+                };
             }
         } else {
-            ctx.body = false;
+            ctx.body = { result: false };
         }
     }
 

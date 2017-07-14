@@ -19,7 +19,7 @@ export enum rankTitle {
     Owner
 }
 
-   
+    
  export class User {
          public id: number;
 
@@ -27,6 +27,7 @@ export enum rankTitle {
 
          public addresses: Address[];
 
+         public orders: Order[];
 }
 
 
@@ -116,6 +117,12 @@ export enum rankTitle {
 }
 
      export class OrderItem {
+    constructor(id: number = 0, product: Product = null, quantity: number = null, order: Order = null) {
+        this.id = id;
+        this.product = product;
+        this.quantity = quantity;
+        this.order = order;
+    }
          public id: number;
 
          public product: Product;
@@ -134,23 +141,27 @@ export enum rankTitle {
          public balanceTrans: string;
 }
 
-export class OrderShipment {
-    public id: string;
-    public label: string;
-    public tracking: string;
-    public shipped: boolean;
+    export class OrderShipment {
+         public id: string;
+         public label: string;
+         public tracking: string;
+         public shipped: boolean;
+
+         public order: Order;
 }
 
-       export class Order {
+         export class Order {
     public static joins: string[] = ['products'];
 
          public id: number;
 
-         public userId: string;
+         public user: User;
 
          public items: OrderItem[];
 
          public address: Address;
+
+         public shipments: OrderShipment[];
 
          public dateCreated: Date;
 
@@ -161,5 +172,6 @@ export class OrderShipment {
          public total: number;
 
          public payment: Payment;
+
 }
 

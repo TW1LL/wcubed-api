@@ -10,6 +10,8 @@ import {Product} from '../models/cart/product';
 import {Address} from '../models/checkout/address';
 import {Order} from '../models/checkout/order';
 import {OrderItem} from '../models/checkout/order.item';
+import {OrderShipment} from '../models/checkout/order.shipment';
+import ShipmentController from './controllers/shipment.controller';
 
 class Config {
     private config: any;
@@ -31,7 +33,8 @@ class Config {
             Order,
             User,
             UserAuth,
-            Address];
+            Address,
+        OrderShipment];
 
         // Routes for controllers of models
         cfg.routes = [
@@ -50,6 +53,10 @@ class Config {
             {
                 path: '/user',
                 controller: UserController
+            },
+            {
+                path: '/shipment',
+                controller: ShipmentController
             }
             ];
         cfg.db.logging = { logOnlyFailedQueries: true, logFailedQueryError: true };
