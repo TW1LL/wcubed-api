@@ -5,28 +5,22 @@ import {Order} from './order';
 @Entity()
 export class Address {
     @PrimaryGeneratedColumn()
-    public id: number;
+    public id?: number;
 
     @ManyToOne((type) => User, (user) => user.addresses)
-    public user: User;
+    public user?: User;
 
     @OneToMany((type) => Order, (order) => order.address)
-    public orders: Order[];
-
-    @Column('varchar')
-    public firstName: string;
-
-    @Column('varchar')
-    public lastName: string;
+    public orders?: Order[];
 
     @Column('varchar')
     public companyName?: string;
 
     @Column('varchar')
-    public streetAddress: string;
+    public street1: string;
 
     @Column('varchar')
-    public streetAddress2?: string;
+    public street2?: string;
 
     @Column('varchar')
     public city: string;
@@ -35,16 +29,20 @@ export class Address {
     public state: string;
 
     @Column('varchar')
-    public zipCode: string;
+    public zip: string;
 
     @Column('varchar')
     public country: string;
 
     @Column('varchar')
-    public phone: string;
-
-    @Column('varchar')
     public email: string;
 
+    public mode?: string;
+
+    @Column('varchar')
+    public residential: boolean;
+
+    @Column('varchar')
+    public name: string;
 
 }

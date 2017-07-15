@@ -92,34 +92,33 @@ export enum rankTitle {
 
 
      export class Address {
-         public id: number;
+         public id?: number;
 
-         public user: User;
+         public user?: User;
 
-         public orders: Order[];
-
-         public firstName: string;
-
-         public lastName: string;
+         public orders?: Order[];
 
          public companyName?: string;
 
-         public streetAddress: string;
+         public street1: string;
 
-         public streetAddress2?: string;
+         public street2?: string;
 
          public city: string;
 
          public state: string;
 
-         public zipCode: string;
+         public zip: string;
 
          public country: string;
 
-         public phone: string;
-
          public email: string;
 
+    public mode?: string;
+
+         public residential: boolean;
+
+         public name: string;
 
 }
 
