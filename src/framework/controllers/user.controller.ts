@@ -5,6 +5,7 @@ import {Auth} from '../auth';
 import {User} from '../../models/account/user';
 import {rankTitle, UserAuth} from '../../models/account/user.auth';
 import {ApiController} from './api.controller';
+
 export class UserController extends ApiController<User> {
     constructor(db: Connection) {
         super(db, 'user', User);
@@ -63,15 +64,29 @@ export class UserController extends ApiController<User> {
         if (usr) {
             ctx.body = false;
         } else {
-            const user = new User();
-            user.email = ctx.request.body.email;
-            const userAuth = new UserAuth();
-            userAuth.user = user;
-            userAuth.rank = rankTitle.User;
-            userAuth.password = bcrypt.hashSync(ctx.request.body.password);
-            const res = await this.db.persist(user);
-            const res2 = await this.userAuth.persist(userAuth);
-            ctx.body = (!!res && !!res2);
+            if(ctx.request.body.password === ctx.request.body.repeatPassword) {
+                const user = new User();
+                user.email = ctx.request.body.email;
+                const userAuth = new UserAuth();
+                userAuth.user = user;
+                userAuth.rank = rankTitle.User;
+                userAuth.password = bcrypt.hashSync(ctx.request.body.password);
+                const res = await this.db.persist(user);
+                const res2 = await this.userAuth.persist(userAuth);
+                const result = (!!res && !!res2);
+                if (result) {
+                    const token = new Auth(ctx, this.userAuth).authorize(user);
+                    ctx.body = {
+                        result: result,
+                        user: user,
+                        token: token
+                    };
+                } else {
+                    ctx.body = {result: result};
+                }
+            } else {
+                ctx.body = {result: false};
+            }
         }
     }
 
