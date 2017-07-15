@@ -51,11 +51,15 @@ export class UserController extends ApiController<User> {
                 };
             } else {
                 ctx.body = {
-                    result: false
+                    result: false,
+                    message: 'Passwords do not match.'
                 };
             }
         } else {
-            ctx.body = { result: false };
+            ctx.body = {
+                result: false,
+                message: 'Could not find a user with that email address.'
+            };
         }
     }
 
@@ -82,10 +86,16 @@ export class UserController extends ApiController<User> {
                         token: token
                     };
                 } else {
-                    ctx.body = {result: result};
+                    ctx.body = {
+                        result: result,
+                        message: 'Something went wrong creating a user. Please try again.'
+                    };
                 }
             } else {
-                ctx.body = {result: false};
+                ctx.body = {
+                    result: false,
+                    message: 'The passwords you have submitted do not match'
+                };
             }
         }
     }
