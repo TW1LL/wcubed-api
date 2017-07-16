@@ -41,7 +41,6 @@ export default class ShipmentController extends ApiController<OrderShipment> {
     createShipments = async (ctx: Context) => {
         const body = ctx.request.body.shipments;
         let shipments = [];
-        logger.log('getting shipments');
         for(let i = 0; i < body.length; i++) {
             const to_address = new this.api.Address(body[i].toAddress);
             const from_address = new this.api.Address(this.fromAddress);
@@ -70,7 +69,7 @@ export default class ShipmentController extends ApiController<OrderShipment> {
         console.log(body);
         let shipments = [];
         for(let i = 0; i< body.length; i++) {
-            shipments.push(this.api.Shipment.retrieve(body[i].id));
+            shipments.push(this.api.Shipment.retrieve(body[i].shipmentId));
         }
         await Promise.all(shipments).then(async (ships) => {
             let buys = [];

@@ -7,6 +7,9 @@ export class Address {
     @PrimaryGeneratedColumn()
     public id?: number;
 
+    @Column('varchar')
+    public name: string;
+
     @ManyToOne((type) => User, (user) => user.addresses)
     public user?: User;
 
@@ -42,7 +45,5 @@ export class Address {
     @Column('varchar')
     public residential: boolean;
 
-    @Column('varchar')
-    public name: string;
 
 }

@@ -43,26 +43,58 @@ export enum rankTitle {
          public products: Product[];
 }
 
-   export class Package {
+    export class Package {
          public id: number;
-         public name: string;
-         public length: number;
-         public width: number;
+
+         public name?: string;
+
+         public length?: number;
+
+         public width?: number;
+
          public height?: number;
+
+         public predefined_package?: string;
+
+    public weight?: number;
 
          public orderItems: OrderItem[];
 
+         public products: Product[];
+
 }
+
+export class Parcel {
+    constructor(packaging: Package, weight: number) {
+        this.length = packaging.length;
+        this.width = packaging.width;
+        this.height = packaging.height;
+        this.predefined_package = packaging.predefined_package;
+        this.weight = weight;
+    }
+
+    public length?: number;
+
+    public width?: number;
+
+    public height?: number;
+
+    public predefined_package?: string;
+
+    public weight?: number;
+
+}
+
 
     
  export class Product {
-    public static joins: string[] = ['category'];
+    public static joins: string[] = ['category', 'packaging'];
 
          public id: number;
 
          public category: Category;
 
-              public packaging: Package[];
+         public packaging: Package;
 
          public orderItems: OrderItem[];
 
@@ -94,6 +126,8 @@ export enum rankTitle {
      export class Address {
          public id?: number;
 
+         public name: string;
+
          public user?: User;
 
          public orders?: Order[];
@@ -118,7 +152,6 @@ export enum rankTitle {
 
          public residential: boolean;
 
-         public name: string;
 
 }
 
@@ -154,13 +187,21 @@ export enum rankTitle {
 }
 
     export class OrderShipment {
+    constructor(shipmentId: string) {
+        this.shipmentId = shipmentId;
+    }
+
          public id: string;
 
-         public label: string;
+         public shipmentId: string;
 
-         public tracking: string;
+         public label?: string;
 
-         public shipped: boolean;
+         public rateId: string;
+
+         public tracking?: string;
+
+         public shipped?: boolean;
 
 }
 
