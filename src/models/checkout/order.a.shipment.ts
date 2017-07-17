@@ -3,8 +3,10 @@ import {Entity} from 'typeorm/decorator/entity/Entity';
 import {Order} from './order';
 @Entity()
 export class OrderShipment {
-    constructor(shipmentId: string) {
+    constructor(shipmentId: string, rateId?: string, price?: number) {
         this.shipmentId = shipmentId;
+        this.rateId = rateId;
+        this.price = price;
     }
 
     @PrimaryGeneratedColumn()
@@ -13,16 +15,19 @@ export class OrderShipment {
     @Column('varchar')
     public shipmentId: string;
 
-    @Column('text')
-    public label?: string;
-
     @Column('varchar')
     public rateId: string;
 
-    @Column('varchar')
+    @Column('text', { nullable: true})
+    public label?: string;
+
+    @Column('varchar', { nullable: true})
     public tracking?: string;
 
-    @Column('varchar')
+    @Column('varchar', { nullable: true})
     public shipped?: boolean;
+
+    @Column('float')
+    public price: number;
 
 }

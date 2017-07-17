@@ -1,11 +1,13 @@
 import {Connection} from 'typeorm';
 import {ApiController} from '../../framework/controllers/api.controller';
 import * as ezPost from '@easypost/api/easypost';
-import {OrderShipment} from '../../models/checkout/order.shipment';
+import {OrderShipment} from '../../models/checkout/order.a.shipment';
 import {Context} from 'koa';
 import {Address} from '../../models/checkout/address';
 import {logger} from '../../utils/logger';
+import config from '../config';
 const EasyPost = ezPost.default;
+
 export default class ShipmentController extends ApiController<OrderShipment> {
     api: any;
     fromAddress: Address = {
@@ -22,7 +24,7 @@ export default class ShipmentController extends ApiController<OrderShipment> {
     };
     constructor(db: Connection) {
         super(db, 'orders', OrderShipment);
-        this.api = new EasyPost('MAPtk5js7AiUyljC6i8yEw');
+        this.api = new EasyPost(config.get().easypost);
         this.routes = [
             {
                 path: '/shipment/create',
@@ -45,7 +47,6 @@ export default class ShipmentController extends ApiController<OrderShipment> {
             const to_address = new this.api.Address(body[i].toAddress);
             const from_address = new this.api.Address(this.fromAddress);
             const parcel = new this.api.Parcel(body[i].parcel);
-            logger.log(parcel);
             const ship = new this.api.Shipment({
                 to_address:     to_address,
                 from_address:   from_address,
@@ -53,12 +54,13 @@ export default class ShipmentController extends ApiController<OrderShipment> {
             });
             shipments.push(ship.save());
         }
-        logger.log('awaiting shipments...');
+
         await Promise.all(shipments).then(ships => {
+            logger.log('API >> CREATE SHIPMENTS SUCCESS');
             ctx.body = ships;
-            logger.log(ships);
         }).catch(err => {
-            logger.log(err);
+            logger.log('API >> CREATE SHIPMENTS ERROR');
+            logger.error(err);
             ctx.body = err;
         });
 
@@ -66,7 +68,6 @@ export default class ShipmentController extends ApiController<OrderShipment> {
 
     buyShipments = async (ctx: Context) => {
         const body = ctx.request.body.shipments;
-        console.log(body);
         let shipments = [];
         for(let i = 0; i< body.length; i++) {
             shipments.push(this.api.Shipment.retrieve(body[i].shipmentId));

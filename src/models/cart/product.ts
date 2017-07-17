@@ -5,7 +5,7 @@ import {Package} from './package';
 
 @Entity()
 export class Product {
-    public static joins: string[] = ['category', 'packaging'];
+    public static joins: any = [['category', Category], ['prodPackaging', Package]];
 
     @PrimaryGeneratedColumn()
     public id: number;
@@ -14,7 +14,7 @@ export class Product {
     public category: Category;
 
     @ManyToOne((type) => Package, (pack) => pack.products)
-    public packaging: Package;
+    public prodPackaging: Package;
 
     @OneToMany((type) => OrderItem, (orderItem) => orderItem.product)
     public orderItems: OrderItem[];

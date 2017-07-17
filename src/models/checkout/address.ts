@@ -16,13 +16,13 @@ export class Address {
     @OneToMany((type) => Order, (order) => order.address)
     public orders?: Order[];
 
-    @Column('varchar')
+    @Column('varchar', { nullable: true})
     public companyName?: string;
 
     @Column('varchar')
     public street1: string;
 
-    @Column('varchar')
+    @Column('varchar', { nullable: true})
     public street2?: string;
 
     @Column('varchar')
@@ -42,7 +42,7 @@ export class Address {
 
     public mode?: string;
 
-    @Column('varchar')
+    @Column('varchar', { default: true})
     public residential: boolean;
 
 

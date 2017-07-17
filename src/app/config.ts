@@ -10,10 +10,11 @@ import {Product} from '../models/cart/product';
 import {Address} from '../models/checkout/address';
 import {Order} from '../models/checkout/order';
 import {OrderItem} from '../models/checkout/order.item';
-import {OrderShipment} from '../models/checkout/order.shipment';
+import {OrderShipment} from '../models/checkout/order.a.shipment';
 import ShipmentController from './controllers/shipment.controller';
 import {Package} from '../models/cart/package';
 import {Payment} from '../models/checkout/order.payment';
+import PaymentController from './controllers/payment.controller';
 
 class Config {
     private config: any;
@@ -62,9 +63,17 @@ class Config {
             {
                 path: '/shipment',
                 controller: ShipmentController
+            },
+            {
+                path: '/product',
+                controller: PaymentController,
             }
             ];
-        cfg.db.logging = { logOnlyFailedQueries: true, logFailedQueryError: true };
+        cfg.db.logging = {
+            //logQueries: true,
+            logOnlyFailedQueries: true,
+            logFailedQueryError: true
+        };
 
         this.config = cfg;
         return cfg;

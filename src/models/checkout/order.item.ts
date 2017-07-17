@@ -2,10 +2,12 @@ import {Column, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColu
 import {Entity} from 'typeorm/decorator/entity/Entity';
 import {Product} from '../cart/product';
 import {Package} from '../cart/package';
-import {OrderShipment} from './order.shipment';
+import {OrderShipment} from './order.a.shipment';
 import {Order} from './order';
 @Entity()
 export class OrderItem {
+    public static joins: any = [['product', Product], ['packaging', Package], ['shipment', OrderShipment]];
+
     constructor(id: number = 0, product: Product = null, quantity: number = null) {
         this.product = product;
         this.quantity = quantity;
@@ -22,11 +24,11 @@ export class OrderItem {
     @JoinColumn()
     public product: Product;
 
-    @ManyToOne((type) => Package, (pack) => pack.orderItems)
+    @ManyToOne((type) => Package, (pack) => pack.orderItems, { cascadeAll: true})
     @JoinColumn()
     public packaging: Package;
 
-    @OneToOne((type) => OrderShipment)
+    @OneToOne((type) => OrderShipment, { cascadeAll: true})
     @JoinColumn()
     public shipment: OrderShipment;
 

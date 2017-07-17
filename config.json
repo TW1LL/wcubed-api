@@ -7,5 +7,7 @@
     "password": "debucW0",
     "database": "wcubed"
   },
-  "secret": "secretSauce"
+  "secret": "WcubedTokenSecretCode",
+  "easypost": "MAPtk5js7AiUyljC6i8yEw",
+  "stripe": "sk_test_8BPIZLz4TzbMqgkxefUbmdZk"
 }

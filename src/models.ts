@@ -58,6 +58,7 @@ export enum rankTitle {
 
     public weight?: number;
 
+
          public orderItems: OrderItem[];
 
          public products: Product[];
@@ -88,13 +89,13 @@ export class Parcel {
 
     
  export class Product {
-    public static joins: string[] = ['category', 'packaging'];
+    public static joins: any = [['category', Category], ['prodPackaging', Package]];
 
          public id: number;
 
          public category: Category;
 
-         public packaging: Package;
+         public prodPackaging: Package;
 
          public orderItems: OrderItem[];
 
@@ -155,7 +156,32 @@ export class Parcel {
 
 }
 
+    export class OrderShipment {
+    constructor(shipmentId: string, rateId?: string, price?: number) {
+        this.shipmentId = shipmentId;
+        this.rateId = rateId;
+        this.price = price;
+    }
+
+         public id: string;
+
+         public shipmentId: string;
+
+         public rateId: string;
+
+         public label?: string;
+
+         public tracking?: string;
+
+         public shipped?: boolean;
+
+         public price: number;
+
+}
+
        export class OrderItem {
+    public static joins: any = [['product', Product], ['packaging', Package], ['shipment', OrderShipment]];
+
     constructor(id: number = 0, product: Product = null, quantity: number = null) {
         this.product = product;
         this.quantity = quantity;
@@ -180,43 +206,35 @@ export class Parcel {
    export class Payment {
          public id: string;
 
+         public stripeToken: string;
+
          public paymentId: string;
 
+         public currency: string;
+
+         public paid: boolean;
+
          public amount: number;
+
          public balanceTrans: string;
 }
 
-    export class OrderShipment {
-    constructor(shipmentId: string) {
-        this.shipmentId = shipmentId;
-    }
-
-         public id: string;
-
-         public shipmentId: string;
-
-         public label?: string;
-
-         public rateId: string;
-
-         public tracking?: string;
-
-         public shipped?: boolean;
-
-}
-
-       export class Order {
-    public static joins: string[] = ['products'];
+import {
+    Column, CreateDateColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, OneToOne,
+    JoinColumn
+} from 'typeorm';
+      export class Order {
+    public static joins: any = [['user', User], ['items', OrderItem], ['address', Address], ['payment', Payment]];
 
          public id: number;
 
-         public user: User;
+              public user: User;
 
          public items: OrderItem[];
 
-         public address: Address;
+              public address: Address;
 
-         public payment: Payment;
+              public payment: Payment;
 
          public dateCreated: Date;
 

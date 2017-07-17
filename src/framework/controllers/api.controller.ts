@@ -36,8 +36,8 @@ export class ApiController<T> implements IApiController {
         const [valid, user] = await new Auth(ctx, this.userAuth).authorized(rankTitle.Mod);
         if (valid) {
             const res = await this.db.persist(ctx.request.body);
-            ctx.body = !!res;
-            if (ctx.body === true) {
+            ctx.body = res;
+            if (!!res) {
                 logger.info('API >> POST SUCCESS ' + this.name + ' AUTH');
             } else {
                 logger.info('API >> POST FAILED ' + this.name + ' AUTH');
@@ -103,10 +103,16 @@ export class ApiController<T> implements IApiController {
     protected whereEqual(column: string, value: string) {
         return this.column(column) + ' = "' + value + '"';
     }
-    private join = (query) => {
-        if (this.type.joins) {
-            this.type.joins.forEach((join) => {
-                query = query.innerJoinAndSelect(this.name + '.' + join, join);
+    private join = (query, join?, type?) => {
+        let joinType = this.type;
+        if (type) {
+            joinType = type;
+        }
+        if (joinType && joinType.joins) {
+            joinType.joins.forEach(([join1, type1]) => {
+                const name = type ? join : this.name;
+                query = query.innerJoinAndSelect(name + '.' + join1, join1);
+                if (type1 && type1.joins) query = this.join(query, join1, type1);
             });
         }
         return query;

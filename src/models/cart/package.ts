@@ -23,10 +23,11 @@ export class Package {
 
     public weight?: number;
 
+
     @OneToMany((type) => OrderItem, (orderItem) => orderItem.packaging)
     public orderItems: OrderItem[];
 
-    @OneToMany((type) => Product, (product) => product.packaging)
+    @OneToMany((type) => Product, (product) => product.prodPackaging)
     public products: Product[];
 
 }
