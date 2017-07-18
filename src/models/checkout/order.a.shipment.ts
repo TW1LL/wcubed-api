@@ -21,6 +21,12 @@ export class OrderShipment {
     @Column('text', { nullable: true})
     public label?: string;
 
+    @Column('varchar')
+    public carrier?: string;
+
+    @Column('varchar')
+    public service?: string;
+
     @Column('varchar', { nullable: true})
     public tracking?: string;
 

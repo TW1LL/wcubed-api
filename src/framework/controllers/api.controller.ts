@@ -103,7 +103,7 @@ export class ApiController<T> implements IApiController {
     protected whereEqual(column: string, value: string) {
         return this.column(column) + ' = "' + value + '"';
     }
-    private join = (query, join?, type?) => {
+    protected join = (query, join?, type?) => {
         let joinType = this.type;
         if (type) {
             joinType = type;

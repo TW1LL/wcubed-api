@@ -6,10 +6,12 @@ import {Context} from 'koa';
 import {Address} from '../../models/checkout/address';
 import {logger} from '../../utils/logger';
 import config from '../config';
+import {Order} from '../../models/checkout/order';
 const EasyPost = ezPost.default;
 
 export default class ShipmentController extends ApiController<OrderShipment> {
     api: any;
+    order: any;
     fromAddress: Address = {
         "mode": "test",
         "street1": "12 Hawk Dr",
@@ -24,6 +26,7 @@ export default class ShipmentController extends ApiController<OrderShipment> {
     };
     constructor(db: Connection) {
         super(db, 'orders', OrderShipment);
+        this.order = db.getRepository(Order);
         this.api = new EasyPost(config.get().easypost);
         this.routes = [
             {
@@ -67,7 +70,7 @@ export default class ShipmentController extends ApiController<OrderShipment> {
     }
 
     buyShipments = async (ctx: Context) => {
-        const body = ctx.request.body.shipments;
+        const body: OrderShipment[] = ctx.request.body.shipments;
         let shipments = [];
         for(let i = 0; i< body.length; i++) {
             shipments.push(this.api.Shipment.retrieve(body[i].shipmentId));
@@ -77,15 +80,21 @@ export default class ShipmentController extends ApiController<OrderShipment> {
             for(let i = 0; i < ships.length; i++) {
                 buys.push(ships[i].buy(body[i].rateId));
             }
-            await Promise.all(buys).then((shipment) => {
-                ctx.body = ships.map(shipment => {return {
-                    id: shipment.id,
-                    label: shipment.postage_label,
-                    rate: shipment.selected_rate,
-                    tracking: shipment.tracker
-                }});
+            await Promise.all(buys).then(async (shipment) => {
+                const query = this.order.createQueryBuilder('orders');
+                const order = await this.join(query, 'orders', Order).where('orders.id = ' + ctx.request.body.orderId).getOne();
+                order.items = order.items.map((item) => {
+                    const ship = shipment.find(sh => sh.id == item.shipment.shipmentId);
+                    item.shipment.label = ship.postage_label.label_url;
+                    item.shipment.tracking = ship.tracker.tracking_code;
+                    item.shipment.carrier = ship.selected_rate.carrier;
+                    item.shipment.service = ship.selected_rate.service;
+                    item.shipment.price = ship.rate;
+                    return item;
+                })
+                logger.log('SHIPMENTS >> BOUGHT');
+                ctx.body = await this.order.persist(order);
             });
-
         })
 
     }

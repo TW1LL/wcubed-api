@@ -21,11 +21,11 @@ export class Order {
     @OneToMany((type) => OrderItem, (orderItem) => orderItem.order, { cascadeUpdate: true, cascadeInsert: true})
     public items: OrderItem[];
 
-    @ManyToOne((type) => Address, (address) => address.orders, { cascadeAll: true})
+    @ManyToOne((type) => Address, (address) => address.orders, { cascadeUpdate: true, cascadeInsert: true})
     @JoinColumn()
     public address: Address;
 
-    @OneToOne((type) => Payment, { cascadeAll: true})
+    @OneToOne((type) => Payment, { cascadeInsert: true, cascadeUpdate: true})
     @JoinColumn()
     public payment: Payment;
 

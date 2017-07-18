@@ -171,6 +171,10 @@ export class Parcel {
 
          public label?: string;
 
+         public carrier?: string;
+
+         public service?: string;
+
          public tracking?: string;
 
          public shipped?: boolean;

@@ -24,11 +24,11 @@ export class OrderItem {
     @JoinColumn()
     public product: Product;
 
-    @ManyToOne((type) => Package, (pack) => pack.orderItems, { cascadeAll: true})
+    @ManyToOne((type) => Package, (pack) => pack.orderItems, { cascadeUpdate: true, cascadeInsert: true})
     @JoinColumn()
     public packaging: Package;
 
-    @OneToOne((type) => OrderShipment, { cascadeAll: true})
+    @OneToOne((type) => OrderShipment, { cascadeUpdate: true, cascadeInsert: true})
     @JoinColumn()
     public shipment: OrderShipment;
 
