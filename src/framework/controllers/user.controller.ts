@@ -41,8 +41,8 @@ export class UserController extends ApiController<User> {
     public login = async (ctx: Context) => {
         const usr = await this.query().where(this.whereEqual('email', ctx.request.body.email)).getOne();
         if (usr) {
-            const userAuth = await this.userAuth.findOneById(usr.id);
-            if (bcrypt.compareSync(ctx.request.body.password, userAuth.password)) {
+            const userAuth = await this.userAuth.findOne({userId: usr.id});
+            if (userAuth && bcrypt.compareSync(ctx.request.body.password, userAuth.password)) {
                 const token = new Auth(ctx, this.userAuth).authorize(usr);
                 ctx.body = {
                     result: true,

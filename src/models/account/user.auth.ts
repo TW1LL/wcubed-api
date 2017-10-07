@@ -1,4 +1,4 @@
-import {Column, JoinColumn, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {Entity} from 'typeorm';
 import {User} from './user';
 @Entity()
@@ -10,14 +10,14 @@ export class UserAuth {
     @JoinColumn()
     public user: User;
 
-    @Column('int')
+    @Column({type:'int', default: 0})
     public rank: number;
 
     get RankTitle() {
         return rankTitle[rankTitle[this.rank]];
     }
 
-    @Column('varchar')
+    @Column({type:'varchar', default: ''})
     public password: string;
 }
 export enum rankTitle {

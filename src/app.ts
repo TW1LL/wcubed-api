@@ -17,7 +17,12 @@ app.use(cors({
     origin: 'http://localhost:4200',
     allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'token']
-}));
+},
+    {
+        origin: 'http://192.168.1.10:4200',
+        allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
+        allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'token']
+    }));
 
 db.connect(config.get().db).then((conn) => {
     router = new Routes(config.routes(conn)).setRoutes(router);

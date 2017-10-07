@@ -1,4 +1,4 @@
-import {Column, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Entity} from 'typeorm/decorator/entity/Entity';
 import {Address} from '../checkout/address';
 import {Order} from '../checkout/order';
