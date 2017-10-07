@@ -30,17 +30,17 @@ export default class OrderController extends ApiController<Order> {
             user = new User();
             user.email = order.address.email;
             user = await this.userRepo.persist(user);
-            order.user = user;
         } else {
-            user = this.userRepo.findOneById(usr.id);
+            user = await this.userRepo.findOneById(usr.id);
         }
+        order.user = user;
         order.description = this.createDescription(order);
         const res = await this.db.persist(order);
         ctx.body = res;
         if (!!res) {
-            logger.info('API >> CREATE ORDER SUCCESS ' + valid ? 'NEW USER' : 'AUTH');
+            logger.info('API >> CREATE ORDER SUCCESS ' + (valid ? 'AUTH' : 'NEW USER'));
         } else {
-            logger.info('API >> CREATE ORDER FAILED ' + valid ? 'NEW USER' : 'AUTH');
+            logger.info('API >> CREATE ORDER FAILED ' + (valid ? 'AUTH' : 'NEW USER'));
         }
     }
 

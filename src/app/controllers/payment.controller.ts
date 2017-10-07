@@ -26,7 +26,7 @@ export default class PaymentController extends ApiController<Payment> {
         const query = this.order.createQueryBuilder('orders');
         const order = await this.join(query, 'orders', Order).where('orders.id = ' + ctx.request.body.orderId).getOne();
         const purchase = await this.stripe.charges.create({
-            amount: this.getTotal(order),
+            amount: this.getTotal(order) * 100,
             source: order.payment.stripeToken,
             currency: order.payment.currency,
             description: order.description
