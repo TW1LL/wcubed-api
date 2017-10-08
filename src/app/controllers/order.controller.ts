@@ -37,7 +37,7 @@ export default class OrderController extends ApiController<Order> {
                 userAuth = await this.userAuth.persist(userAuth);
             }
         } else {
-            user = await this.userRepo.findOneById(usr.user.id);
+            user = usr;
         }
 
         order.user = user;
@@ -51,7 +51,6 @@ export default class OrderController extends ApiController<Order> {
             logger.info('API >> CREATE ORDER FAILED ' + (valid ? 'AUTH' : 'NEW USER'));
         }
     }
-
 
     createDescription(order: Order) {
         let description = order.items[0].product.name;

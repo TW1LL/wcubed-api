@@ -117,5 +117,4 @@ export class ApiController<T> implements IApiController {
         }
         return query;
     }
-
 }

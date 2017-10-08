@@ -3,7 +3,7 @@ import {Context} from 'koa';
 import {Connection} from 'typeorm';
 import {Auth} from '../auth';
 import {User} from '../../models/account/user';
-import {rankTitle, UserAuth} from '../../models/account/user.auth';
+import {UserAuth, rankTitle} from '../../models/account/user.auth';
 import {ApiController} from './api.controller';
 
 export class UserController extends ApiController<User> {
@@ -24,6 +24,11 @@ export class UserController extends ApiController<User> {
                 method: 'patch',
                 path: '/user/password',
                 fn: this.changePassword
+            },
+            {
+                method: 'post',
+                path: '/user/check-rank',
+                fn: this.checkRank
             },
             {
                 method: 'patch',
@@ -66,7 +71,36 @@ export class UserController extends ApiController<User> {
     public register = async (ctx: Context) => {
         const usr = await this.query().where(this.whereEqual('email', ctx.request.body.email)).getOne();
         if (usr) {
-            ctx.body = false;
+            const userAuth: UserAuth = await this.userAuth.findOne({userId: usr.id});
+            if (userAuth && !userAuth.password) {
+                if(ctx.request.body.password === ctx.request.body.repeatPassword) {
+                    userAuth.password = bcrypt.hashSync(ctx.request.body.password);
+                    const result = await this.userAuth.persist(userAuth);
+                    if (!!result) {
+                        const token = new Auth(ctx, this.userAuth).authorize(usr);
+                        ctx.body = {
+                          result: result,
+                            user: usr,
+                            token: token
+                        }
+                    } else {
+                        ctx.body = {
+                            result: result,
+                            message: 'Something went wrong creating a user. Please try again.'
+                        };
+                    }
+                } else {
+                    ctx.body = {
+                        result: false,
+                        message: 'The passwords you have submitted do not match.'
+                    };
+                }
+            } else {
+                ctx.body = {
+                    result: false,
+                    message: 'You are already registered.'
+                }
+            }
         } else {
             if(ctx.request.body.password === ctx.request.body.repeatPassword) {
                 const user = new User();
@@ -94,7 +128,7 @@ export class UserController extends ApiController<User> {
             } else {
                 ctx.body = {
                     result: false,
-                    message: 'The passwords you have submitted do not match'
+                    message: 'The passwords you have submitted do not match.'
                 };
             }
         }
@@ -120,6 +154,26 @@ export class UserController extends ApiController<User> {
             }
         } else {
             ctx.body = false;
+        }
+    }
+
+    public checkRank = async (ctx: Context) => {
+
+        const [valid, userToken] = await new Auth(ctx, this.userAuth).authorized(rankTitle.User);
+        if (valid) {
+            if (ctx.request.body.rank <= userToken.rank) {
+                ctx.body = {
+                    result: true
+                };
+            } else {
+                ctx.body = {
+                    result: false
+                };
+            }
+        } {
+            ctx.body = {
+                result: false
+            };
         }
     }
 
