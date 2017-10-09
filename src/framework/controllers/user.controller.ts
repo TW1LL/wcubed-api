@@ -159,21 +159,9 @@ export class UserController extends ApiController<User> {
 
     public checkRank = async (ctx: Context) => {
 
-        const [valid, userToken] = await new Auth(ctx, this.userAuth).authorized(rankTitle.User);
-        if (valid) {
-            if (ctx.request.body.rank <= userToken.rank) {
-                ctx.body = {
-                    result: true
-                };
-            } else {
-                ctx.body = {
-                    result: false
-                };
-            }
-        } {
-            ctx.body = {
-                result: false
-            };
+        const [valid, userToken] = await new Auth(ctx, this.userAuth).authorized(ctx.request.body.rank);
+        ctx.body = {
+            result: valid
         }
     }
 
