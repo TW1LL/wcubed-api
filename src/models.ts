@@ -19,7 +19,7 @@ export enum rankTitle {
     Owner
 }
 
-
+    
  export class User {
          public id: number;
 
