@@ -159,7 +159,7 @@ export class UserController extends ApiController<User> {
 
     public checkRank = async (ctx: Context) => {
 
-        const [valid, userToken] = await new Auth(ctx, this.userAuth).authorized(ctx.request.body.rank);
+        const [valid, userToken] = await new Auth(ctx, this.userAuth).authorized(ctx.request.body.checkRank);
         ctx.body = {
             result: valid
         }
