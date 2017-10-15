@@ -22,7 +22,6 @@ export class Auth {
         }
         try {
             const userToken: User = jwt.verify(this.headers.token, this.config.secret);
-            console.log(userToken);
             const user = await this.userAuth.findOneById(userToken.id);
             console.log(user);
             if (user && user.rank >= requiredRank) {
