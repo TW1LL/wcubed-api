@@ -42,7 +42,7 @@ export class Routes {
             }
         });
         router.post('/deploy', (ctx) => {deploy(ctx, db)});
-        router.get('/test', function(ctx) { ctx.body = 'hello world!' });
+        router.get('/test', function(ctx) { ctx.body = 'hello world!!' });
         return router;
     }
 }
