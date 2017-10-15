@@ -20,14 +20,13 @@ app.use(cors({
 }));
 connect();
 function connect() {
-    logger.log('Connecting to database...');
     db.connect(config.get().db).then((conn) => {
         router = new Routes(config.routes(conn)).setRoutes(router);
         app.use(router.routes());
         app.listen(port);
         logger.debug('Starting server on port ' + port);
-    }).catch(() => {
-        logger.log('Could not connect to database.');
+    }).catch((err) => {
+        logger.log(err);
         connect();
     });
 
