@@ -40,7 +40,7 @@ export class Routes {
                 });
             }
         });
-        router.get('/deploy', deploy)
+        router.post('/deploy', deploy)
         return router;
     }
 }
