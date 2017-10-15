@@ -11,8 +11,12 @@ export function deploy(ctx: Context, db: Connection) {
     db.close().then(() => {
         logger.log('Closed Connection to database.');
         logger.log('Running deploy script.');
-        var stdout = exec('sh init/deploy.sh', function(stdout) {
+        var stdout = exec('sh init/deploy.sh', function(error, stdout, stderror) {
             logger.log(stdout);
+            logger.log(stderror);
+            if (error) {
+                logger.log(error);
+            }
             var second = exec('pm2 restart app');
         });
     });
