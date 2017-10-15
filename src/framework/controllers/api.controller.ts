@@ -23,8 +23,8 @@ export class ApiController<T> implements IApiController {
 
     public getAll = async (ctx: Context) => {
         if (this.type.permissions) {
-            console.log(this.type.permissions);
             const [valid, user] = await new Auth(ctx, this.userAuth).authorized(this.type.permssions);
+            console.log(this.type.permissions, valid);
             if (valid) {
                 logger.info('API >> GET ALL ' + this.name);
                 ctx.body = await this.query(true).getMany();
