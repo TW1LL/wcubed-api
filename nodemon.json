@@ -1,7 +1,8 @@
 {
   "verbose": false,
-  "ignore": ["node_modules/**/node_modules", ".git"],
-  "watch": "./build/",
-  "ext": "js",
+  "ignore": ["node_modules/**/node_modules", ".git", "src/**/*.spec.ts"],
+  "watch": "./src/",
+  "ext": "ts",
+  "exec": "tsc",
   "delay": "2500"
 }
