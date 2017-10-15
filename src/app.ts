@@ -19,6 +19,7 @@ app.use(cors({
     allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'token']
 }));
 const dbConfig = config.get().db;
+console.log(dbConfig);
 connect();
 function connect() {
     db.connect(dbConfig).then((conn) => {
