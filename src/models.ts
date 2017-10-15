@@ -227,8 +227,9 @@ import {
     Column, CreateDateColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, OneToOne,
     JoinColumn
 } from 'typeorm';
-      export class Order {
+       export class Order {
     public static joins: any = [['user', User], ['items', OrderItem], ['address', Address], ['payment', Payment]];
+    public static permissions: rankTitle = rankTitle.Mod;
 
          public id: number;
 

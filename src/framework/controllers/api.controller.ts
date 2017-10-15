@@ -22,14 +22,39 @@ export class ApiController<T> implements IApiController {
     }
 
     public getAll = async (ctx: Context) => {
-        logger.info('API >> GET ALL ' + this.name);
-        ctx.body = await this.query(true).getMany();
+        if (this.type.permissions) {
+            console.log(this.type.permissions);
+            const [valid, user] = await new Auth(ctx, this.userAuth).authorized(this.type.permssions);
+            if (valid) {
+                logger.info('API >> GET ALL ' + this.name);
+                ctx.body = await this.query(true).getMany();
+            } else {
+                logger.info('API >> GET ALL FAILED ' + this.name + ' UNAUTH');
+                ctx.body = false;
+            }
+        } else {
+            logger.info('API >> GET ALL ' + this.name);
+            ctx.body = await this.query(true).getMany();
+        }
+
     }
 
     public get = async (ctx: Context) => {
-        logger.info('API >> GET ' + this.name + ' id:' + ctx.params[0]);
-        const id = ctx.params[0];
-        ctx.body = await this.query(true).where(this.whereEqual('id', id)).getOne();
+        if (this.type.permissions) {
+            const [valid, user] = await new Auth(ctx, this.userAuth).authorized(this.type.permssions);
+            if (valid) {
+                logger.info('API >> GET ' + this.name + ' id:' + ctx.params[0]);
+                const id = ctx.params[0];
+                ctx.body = await this.query(true).where(this.whereEqual('id', id)).getOne();
+            } else {
+                logger.info('API >> GET FAILED ' + this.name + ' UNAUTH');
+                ctx.body = false;
+            }
+        } else {
+            logger.info('API >> GET ' + this.name + ' id:' + ctx.params[0]);
+            const id = ctx.params[0];
+            ctx.body = await this.query(true).where(this.whereEqual('id', id)).getOne();
+        }
     }
 
     public post = async (ctx: Context) => {

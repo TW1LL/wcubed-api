@@ -5,6 +5,7 @@ import {Auth} from '../auth';
 import {User} from '../../models/account/user';
 import {UserAuth, rankTitle} from '../../models/account/user.auth';
 import {ApiController} from './api.controller';
+import {logger} from '../../utils/logger';
 
 export class UserController extends ApiController<User> {
     constructor(db: Connection) {
@@ -160,6 +161,7 @@ export class UserController extends ApiController<User> {
     public checkRank = async (ctx: Context) => {
 
         const [valid, userToken] = await new Auth(ctx, this.userAuth).authorized(ctx.request.body.checkRank);
+        logger.log('CHECK RANK >>' + ctx.request.body.checkRank + ' - ' + valid);
         ctx.body = {
             result: valid
         }

@@ -42,6 +42,7 @@ class Config {
             OrderShipment
         ];
 
+
         // Routes for controllers of models
         cfg.routes = [
             {

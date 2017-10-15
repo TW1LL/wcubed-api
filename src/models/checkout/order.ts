@@ -7,9 +7,11 @@ import {Address} from './address';
 import {OrderItem} from './order.item';
 import {Payment} from './order.payment';
 import {User} from '../account/user';
+import {rankTitle} from '../account/user.auth';
 @Entity()
 export class Order {
     public static joins: any = [['user', User], ['items', OrderItem], ['address', Address], ['payment', Payment]];
+    public static permissions: rankTitle = rankTitle.Mod;
 
     @PrimaryGeneratedColumn()
     public id: number;
