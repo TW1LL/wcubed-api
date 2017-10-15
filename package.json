@@ -31,7 +31,9 @@
   },
   "scripts": {
     "start": "concurrently  \"tsc --watch\" \"nodemon build\\app.js\" \"nodemon src\\models\\index.js --watch .\\src\\models -e ts\" ",
-    "start_linux": "concurrently \"tsc --watch\" \"nodemon build/app.js\" \"nodemon src/models/index.js --watch ./src/models -e ts\" "
+    "start_linux": "concurrently \"tsc --watch\" \"nodemon build/app.js\" \"nodemon src/models/index.js --watch ./src/models -e ts\" ",
+    "prod": "nodemon build/app.js",
+    "postinstall": "./postinstall.sh"
   },
   "repository": {
     "type": "git",
