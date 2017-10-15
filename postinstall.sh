@@ -1,5 +1,3 @@
-cd wcubed-api
-npm install
 sed -i -e "/^interface Request extends BaseRequest {$/a"$;\\\n'"body: any;"'\n' node/modules/@types/koa/index.d.ts
 sed -i "var regeneratorRuntime=require('regenerator-runtime/runtime');" node_modules/@easypost/api/easypost.js
 ## edit @easypost/api/easypost.js
