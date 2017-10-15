@@ -2,7 +2,7 @@ import * as Koa from 'koa';
 import * as koaBody from 'koa-body';
 import * as Router from 'koa-router';
 import * as cors from 'koa2-cors';
-import config from './app/config';
+import config from './config';
 import {db} from './utils/db';
 import {logger} from './utils/logger';
 import {Routes} from './framework/routes';

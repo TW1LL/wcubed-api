@@ -5,7 +5,7 @@ import {OrderShipment} from '../../models/checkout/order.a.shipment';
 import {Context} from 'koa';
 import {Address} from '../../models/checkout/address';
 import {logger} from '../../utils/logger';
-import config from '../config';
+import config from '../../config';
 import {Order} from '../../models/checkout/order';
 const EasyPost = ezPost.default;
 

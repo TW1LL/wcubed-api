@@ -3,7 +3,7 @@ import {ApiController} from '../../framework/controllers/api.controller';
 import {Payment} from '../../models/checkout/order.payment';
 import {Context} from 'koa';
 import * as Stripe from 'stripe';
-import config from '../config';
+import config from '../../config';
 import {Order} from '../../models/checkout/order';
 import {logger} from '../../utils/logger';
 export default class PaymentController extends ApiController<Payment> {
