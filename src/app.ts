@@ -18,10 +18,10 @@ app.use(cors({
     allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'token']
 }));
-const db = config.get().db;
+const dbConfig = config.get().db;
 connect();
 function connect() {
-    db.connect(db).then((conn) => {
+    db.connect(dbConfig).then((conn) => {
         router = new Routes(config.routes(conn)).setRoutes(router);
         app.use(router.routes());
         app.listen(port);
