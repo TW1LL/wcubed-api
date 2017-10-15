@@ -115,7 +115,7 @@ export class ApiController<T> implements IApiController {
     protected update = async (body) => {
         const obj = await this.db.findOneById(body.id);
         for (const i in body) {
-            if (obj.hasOwnProperty(i)) {
+            if (obj && obj.hasOwnProperty(i)) {
                 obj[i] = body[i];
             }
         }
