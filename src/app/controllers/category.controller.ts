@@ -12,7 +12,7 @@ export default class CategoryController extends ApiController<Category> {
         },
         {
             method: 'get',
-            path: '/category/paintball',
+            path: '/category/pb',
             fn: this.paintball
         }];
     }
