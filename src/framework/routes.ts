@@ -1,6 +1,7 @@
 import * as Router from 'koa-router';
 import {IApiController} from './controllers/api.controller.interface';
 import {deploy} from '../deploy';
+import {Connection} from 'typeorm';
 interface IRoute {
     path: string;
     controller: IApiController;
@@ -16,7 +17,7 @@ export class Routes {
     constructor(routeList: IRoute[]) {
         this.routeList = routeList;
     }
-    public setRoutes(router: Router) {
+    public setRoutes(router: Router, db: Connection) {
         this.routeList.forEach((route: IRoute) => {
             router.get(route.path, route.controller.getAll);
             router.get(new RegExp(route.path + '/([0-9]+)'), route.controller.get);
@@ -40,7 +41,7 @@ export class Routes {
                 });
             }
         });
-        router.post('/deploy', deploy);
+        router.post('/deploy', (ctx) => {deploy(ctx, db)});
         router.get('/test', function(ctx) { ctx.body = 'hello world!' });
         return router;
     }

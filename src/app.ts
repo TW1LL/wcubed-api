@@ -22,7 +22,7 @@ const dbConfig = config.get().db;
 connect();
 function connect() {
     db.connect(dbConfig).then((conn) => {
-        router = new Routes(config.routes(conn)).setRoutes(router);
+        router = new Routes(config.routes(conn)).setRoutes(router, conn);
         app.use(router.routes());
         app.listen(port);
         logger.debug('Starting server on port ' + port);
