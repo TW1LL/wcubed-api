@@ -68,7 +68,7 @@ class Config {
             }
             ];
         cfg.db.logging = {
-            //logQueries: true,
+            logQueries: true,
             logOnlyFailedQueries: true,
             logFailedQueryError: true
         };
