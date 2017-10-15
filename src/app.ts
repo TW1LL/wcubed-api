@@ -28,7 +28,6 @@ function connect() {
         logger.debug('Starting server on port ' + port);
     }).catch((err) => {
         logger.log('error connecting to db');
-        connect();
     });
 
 }

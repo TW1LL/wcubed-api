@@ -1,4 +1,5 @@
+pm2 stop build/app.js
 git pull
 tsc
 npm install
-# systemctl start nodemon.service
+pm2 start build/app.js
