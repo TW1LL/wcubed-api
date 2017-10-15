@@ -4,6 +4,7 @@
   "description": "",
   "dependencies": {
     "@easypost/api": "^3.0.12",
+    "bcrypt-nodejs": "0.0.3",
     "concurrently": "^3.5.0",
     "jsonwebtoken": "^7.4.1",
     "koa": "^2.3.0",
@@ -29,7 +30,10 @@
     "typescript": "^2.4.1"
   },
   "scripts": {
-    "start": "concurrently  \"tsc --watch\" \"nodemon build\\app.js\" \"nodemon src\\models\\index.js --watch .\\src\\models -e ts\" "
+    "start": "concurrently  \"tsc --watch\" \"nodemon build\\app.js\" \"nodemon src\\models\\index.js --watch .\\src\\models -e ts\" ",
+    "start_linux": "concurrently \"tsc --watch\" \"nodemon build/app.js\" \"nodemon src/models/index.js --watch ./src/models -e ts\" ",
+    "prod": "nodemon build/app.js",
+    "postinstall": "./postinstall.sh"
   },
   "repository": {
     "type": "git",

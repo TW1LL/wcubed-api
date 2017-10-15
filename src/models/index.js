@@ -9,7 +9,7 @@ function stripModels() {
         var modelFiles = fs.readdirSync(dir + path);
         for (var i = 0; i < modelFiles.length; i++) {
             const modelFile = fs.readFileSync(dir + path + '/' + modelFiles[i]).toString();
-            bigModel += modelFile.replace(/@\w+(.+)\r\n/g, ' ').replace(/import .+;\r\n/g, ' ');
+            bigModel += modelFile.replace(/@\w+(.+)\r?\n/g, ' ').replace(/import .+;\r?\n/g, ' ');
             bigModel += "\n";
         }
         return bigModel;
