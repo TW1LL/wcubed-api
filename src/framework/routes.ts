@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import {IApiController} from './controllers/api.controller.interface';
-
+import {deploy} from '../deploy';
 interface IRoute {
     path: string;
     controller: IApiController;
@@ -40,6 +40,7 @@ export class Routes {
                 });
             }
         });
+        router.get('/deploy', deploy)
         return router;
     }
 }
