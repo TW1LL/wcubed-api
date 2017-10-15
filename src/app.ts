@@ -18,10 +18,14 @@ app.use(cors({
     allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'token']
 }));
+function connect() {
+    db.connect(config.get().db).then((conn) => {
+        router = new Routes(config.routes(conn)).setRoutes(router);
+        app.use(router.routes());
+        app.listen(port);
+        logger.debug('Starting server on port ' + port);
+    }).catch(() => {
+        connect();
+    });
 
-db.connect(config.get().db).then((conn) => {
-    router = new Routes(config.routes(conn)).setRoutes(router);
-    app.use(router.routes());
-    app.listen(port);
-    logger.debug('Starting server on port ' + port);
-});
+}
