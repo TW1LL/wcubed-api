@@ -15,6 +15,7 @@ import ShipmentController from './app/controllers/shipment.controller';
 import {Package} from './models/cart/package';
 import {Payment} from './models/checkout/order.payment';
 import PaymentController from './app/controllers/payment.controller';
+import PackageController from './app/controllers/package.controller';
 
 class Config {
     private config: any;
@@ -64,7 +65,11 @@ class Config {
             },
             {
                 path: '/product',
-                controller: PaymentController,
+                controller: PaymentController
+            },
+            {
+                path: '/package',
+                controller: PackageController
             }
             ];
         cfg.db.logging = {
