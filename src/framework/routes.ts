@@ -41,7 +41,7 @@ export class Routes {
             }
         });
         router.post('/deploy', deploy);
-        router.get('/test', function(ctx) { ctx.body = 'hello world!!!!' });
+        router.get('/test', function(ctx) { ctx.body = 'hello world!' });
         return router;
     }
 }
