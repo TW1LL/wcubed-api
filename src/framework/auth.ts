@@ -30,7 +30,7 @@ export class Auth {
                 return [false, null];
             }
         } catch (err) {
-            logger.error(err);
+            logger.error('AUTH >> Invalid Token');
             return [false, null];
         }
     }

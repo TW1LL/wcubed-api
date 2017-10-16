@@ -27,7 +27,7 @@ function connect() {
         app.listen(port);
         logger.debug('Starting server on port ' + port);
     }).catch((err) => {
-        logger.log(err);
+        logger.log('Couldn\'t connect to the database.');
     });
 
 }
