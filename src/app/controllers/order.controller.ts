@@ -29,8 +29,7 @@ export default class OrderController extends ApiController<Order> {
     getOrdersForUser = async (ctx: Context) => {
         const [valid, usr] = await new Auth(ctx, this.userAuth).authorized(rankTitle.User);
         if (valid) {
-            let user = await this.userRepo.findOneById(usr.id);
-            ctx.body = await this.query(true).find(this.whereEqual({'user': user}));
+            ctx.body = await this.query(false).where(this.whereEqual('order.user', usr.id.toString()));
         }
         else {
             ctx.body = false;
