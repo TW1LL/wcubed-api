@@ -17,8 +17,23 @@ export default class OrderController extends ApiController<Order> {
                 path: '/order/create',
                 method: 'post',
                 fn: this.createOrder
+            },
+            {
+                path: 'order/user',
+                method: 'get',
+                fn: this.getOrdersForUser
             }
         ]
+    }
+
+    getOrdersForUser = async (ctx: Context) => {
+        const [valid, usr] = await new Auth(ctx, this.userAuth).authorized(rankTitle.User);
+        if (valid) {
+            ctx.body = await this.query(true).where(this.whereEqual('userId', usr.id));
+        }
+        else {
+            ctx.body = false;
+        }
     }
 
     createOrder = async (ctx: Context) => {
