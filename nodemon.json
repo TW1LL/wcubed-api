@@ -3,5 +3,5 @@
   "ignore": ["node_modules/**/node_modules", ".git"],
   "watch": "./build/",
   "ext": "js",
-  "delay": "15000"
+  "delay": "1500"
 }

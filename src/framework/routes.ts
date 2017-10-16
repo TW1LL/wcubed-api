@@ -1,7 +1,8 @@
 import * as Router from 'koa-router';
 import {IApiController} from './controllers/api.controller.interface';
-import {deploy} from '../deploy';
+import {deploy} from './deploy';
 import {Connection} from 'typeorm';
+import {upload} from './upload';
 interface IRoute {
     path: string;
     controller: IApiController;
@@ -41,8 +42,8 @@ export class Routes {
                 });
             }
         });
+        router.post('/upload/:type', (ctx) => {upload(ctx, db)});
         router.post('/deploy', (ctx) => {deploy(ctx, db)});
-        router.get('/test', function(ctx) { ctx.body = 'hello world!!' });
         return router;
     }
 }

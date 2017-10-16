@@ -19,6 +19,9 @@ export class UserAuth {
 
     @Column({type:'varchar', default: ''})
     public password: string;
+
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
 }
 export enum rankTitle {
     Guest,

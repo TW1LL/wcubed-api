@@ -16,4 +16,7 @@ export class User {
 
     @OneToMany((type) => Order, (order) => order.user)
     public orders: Order[];
+
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
 }

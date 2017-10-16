@@ -36,4 +36,6 @@ export class OrderShipment {
     @Column('float')
     public price: number;
 
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
 }

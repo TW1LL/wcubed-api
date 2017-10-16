@@ -36,5 +36,7 @@ export class OrderItem {
     @JoinColumn()
     public order: Order;
 
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
 
 }

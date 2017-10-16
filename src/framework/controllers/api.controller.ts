@@ -26,14 +26,14 @@ export class ApiController<T> implements IApiController {
             const [valid, user] = await new Auth(ctx, this.userAuth).authorized(this.type.permissions);
             if (valid) {
                 logger.info('API >> GET ALL ' + this.name);
-                ctx.body = await this.query(true).getMany();
+                ctx.body = await this.query(true).where(this.column('deleted') + ' <> 1').getMany();
             } else {
                 logger.info('API >> GET ALL FAILED ' + this.name + ' UNAUTH');
                 ctx.body = false;
             }
         } else {
             logger.info('API >> GET ALL ' + this.name);
-            ctx.body = await this.query(true).getMany();
+            ctx.body = await this.query(true).where(this.column('deleted') + ' <> 1').getMany();
         }
 
     }
@@ -44,7 +44,7 @@ export class ApiController<T> implements IApiController {
             if (valid) {
                 logger.info('API >> GET ' + this.name + ' id:' + ctx.params[0]);
                 const id = ctx.params[0];
-                ctx.body = await this.query(true).where(this.whereEqual('id', id)).getOne();
+                ctx.body = await this.query(true).where(this.whereEqual('id', id)).andWhere(this.column('deleted') + ' <> 1').getOne();
             } else {
                 logger.info('API >> GET FAILED ' + this.name + ' UNAUTH');
                 ctx.body = false;
@@ -52,7 +52,7 @@ export class ApiController<T> implements IApiController {
         } else {
             logger.info('API >> GET ' + this.name + ' id:' + ctx.params[0]);
             const id = ctx.params[0];
-            ctx.body = await this.query(true).where(this.whereEqual('id', id)).getOne();
+            ctx.body = await this.query(true).where(this.whereEqual('id', id)).andWhere(this.column('deleted') + ' <> 1').getOne();
         }
     }
 
@@ -93,7 +93,8 @@ export class ApiController<T> implements IApiController {
         const [valid, user] = await new Auth(ctx, this.userAuth).authorized(rankTitle.Admin);
         if (valid) {
             const obj = await this.db.findOneById(ctx.params[0]);
-            const res = await this.db.remove(obj);
+            obj.deleted = 1;
+            const res = await this.db.persist(obj);
             ctx.body = !!res;
             if (ctx.body === true) {
                 logger.info('API >> DELETE SUCCESS ' + this.name + ' AUTH');
@@ -124,7 +125,7 @@ export class ApiController<T> implements IApiController {
     protected column(name: string) {
         return this.name + '.' + name;
     }
-    protected whereEqual(column: string, value: string) {
+    protected whereEqual(column: string, value: any) {
         return this.column(column) + ' = "' + value + '"';
     }
     protected join = (query, join?, type?) => {

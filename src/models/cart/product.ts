@@ -50,5 +50,9 @@ export class Product {
     public images: string;
 
 
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
+
+
 
 }

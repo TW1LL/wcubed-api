@@ -18,11 +18,11 @@ export default class CategoryController extends ApiController<Category> {
     }
 
     public cnc = async (ctx: Context) => {
-        ctx.body = await this.query(true).where(this.whereEqual('name', 'CNC Products')).getOne();
+        ctx.body = await this.query(true).where(this.whereEqual('name', 'CNC Products')).andWhere(this.column('deleted') + '<> 1').getOne();
     }
 
     public paintball = async (ctx: Context) => {
-        ctx.body = await this.query(true).where(this.whereEqual('name', 'Paintball Products')).getOne();
+        ctx.body = await this.query(true).where(this.whereEqual('name', 'Paintball Products')).andWhere(this.column('deleted') + '<> 1').getOne();
     }
 
 }

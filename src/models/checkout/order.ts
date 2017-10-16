@@ -43,4 +43,6 @@ export class Order {
     @Column('decimal')
     public total: number;
 
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
 }

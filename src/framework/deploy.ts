@@ -1,6 +1,6 @@
 import {Context} from 'koa';
 import {Connection} from 'typeorm';
-import {logger} from './utils/logger';
+import {logger} from '../utils/logger';
 const exec = require('child_process').exec;
 
 export function deploy(ctx: Context, db: Connection) {

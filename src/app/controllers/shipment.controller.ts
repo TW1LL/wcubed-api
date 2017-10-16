@@ -82,7 +82,7 @@ export default class ShipmentController extends ApiController<OrderShipment> {
             }
             await Promise.all(buys).then(async (shipment) => {
                 const query = this.order.createQueryBuilder('orders');
-                const order = await this.join(query, 'orders', Order).where('orders.id = ' + ctx.request.body.orderId).getOne();
+                const order = await this.join(query, 'orders', Order).where('orders.id = ' + ctx.request.body.orderId).andWhere('orders.deleted <> 1').getOne();
                 order.items = order.items.map((item) => {
                     const ship = shipment.find(sh => sh.id == item.shipment.shipmentId);
                     item.shipment.label = ship.postage_label.label_url;

@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 const app = new Koa();
 let router = new Router();
 
-app.use(koaBody());
+app.use(koaBody({ multipart: true }));
 app.use(cors({
     origin: '*',
     allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],

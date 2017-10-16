@@ -22,7 +22,7 @@ export class Auth {
         }
         try {
             const userToken: User = jwt.verify(this.headers.token, this.config.secret);
-            const user = await this.userAuth.findOneById(userToken.id);
+            const user = await this.userAuth.createQueryBuilder('userAuth').where('userAuth.user = ' +userToken.id).andWhere('userAuth.deleted <> 1').getOne();
             console.log(user);
             if (user && user.rank >= requiredRank) {
                 return [true, user];

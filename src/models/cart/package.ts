@@ -30,6 +30,9 @@ export class Package {
     @OneToMany((type) => Product, (product) => product.prodPackaging)
     public products: Product[];
 
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
+
 }
 
 export class Parcel {

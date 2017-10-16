@@ -10,6 +10,8 @@
     }
 
          public password: string;
+
+         public deleted?: number;
 }
 export enum rankTitle {
     Guest,
@@ -28,6 +30,8 @@ export enum rankTitle {
          public addresses: Address[];
 
          public orders: Order[];
+
+         public deleted?: number;
 }
 
 
@@ -41,6 +45,8 @@ export enum rankTitle {
          public thumbnail: string;
 
          public products: Product[];
+
+         public deleted?: number;
 }
 
     export class Package {
@@ -62,6 +68,8 @@ export enum rankTitle {
          public orderItems: OrderItem[];
 
          public products: Product[];
+
+         public deleted?: number;
 
 }
 
@@ -120,6 +128,9 @@ export class Parcel {
          public images: string;
 
 
+         public deleted?: number;
+
+
 
 }
 
@@ -153,6 +164,7 @@ export class Parcel {
 
          public residential: boolean;
 
+         public deleted?: number;
 
 }
 
@@ -181,6 +193,7 @@ export class Parcel {
 
          public price: number;
 
+         public deleted?: number;
 }
 
        export class OrderItem {
@@ -204,6 +217,7 @@ export class Parcel {
 
               public order: Order;
 
+         public deleted?: number;
 
 }
 
@@ -221,6 +235,8 @@ export class Parcel {
          public amount: number;
 
          public balanceTrans: string;
+
+         public deleted?: number;
 }
 
 import {
@@ -249,5 +265,6 @@ import {
 
          public total: number;
 
+         public deleted?: number;
 }
 

@@ -45,5 +45,7 @@ export class Address {
     @Column('varchar', { default: true})
     public residential: boolean;
 
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
 
 }

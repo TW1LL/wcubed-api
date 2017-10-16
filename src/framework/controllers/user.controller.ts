@@ -47,7 +47,7 @@ export class UserController extends ApiController<User> {
     public login = async (ctx: Context) => {
         const usr = await this.query().where(this.whereEqual('email', ctx.request.body.email)).getOne();
         if (usr) {
-            const userAuth = await this.userAuth.findOne({userId: usr.id});
+            const userAuth = await this.userAuth.createQueryBuilder('userAuth').where('userAuth.user = ' + usr.id).andWhere('userAuth.deleted <> 1').getOne();
             if (userAuth && bcrypt.compareSync(ctx.request.body.password, userAuth.password)) {
                 const token = new Auth(ctx, this.userAuth).authorize(usr);
                 ctx.body = {
@@ -70,9 +70,9 @@ export class UserController extends ApiController<User> {
     }
 
     public register = async (ctx: Context) => {
-        const usr = await this.query().where(this.whereEqual('email', ctx.request.body.email)).getOne();
+        const usr = await this.query().where(this.whereEqual('email', ctx.request.body.email)).andWhere(this.column('deleted') + '<> 1').getOne();
         if (usr) {
-            const userAuth: UserAuth = await this.userAuth.findOne({userId: usr.id});
+            const userAuth = await this.userAuth.createQueryBuilder('userAuth').where(this.whereEqual('user', usr.id)).andWhere(this.column('deleted') + '<> 1').getOne();
             if (userAuth && !userAuth.password) {
                 if(ctx.request.body.password === ctx.request.body.repeatPassword) {
                     userAuth.password = bcrypt.hashSync(ctx.request.body.password);
@@ -142,7 +142,7 @@ export class UserController extends ApiController<User> {
             if (!ctx.request.body.id || userToken.id === ctx.request.body.id) {
                 user = userToken;
             } else if (userToken.rank >= rankTitle.Admin) {
-                user = this.userAuth.findOneById(ctx.request.body.id);
+                user = await this.userAuth.createQueryBuilder('userAuth').where('userAuth.user = ' + ctx.request.body.id).andWhere('userAuth.deleted <> 1').getOne();
             } else {
                 user = false;
             }
@@ -172,7 +172,7 @@ export class UserController extends ApiController<User> {
         if (valid) {
             const user = (userToken.id === ctx.request.body.id) ?
                 userToken :
-                await this.userAuth.findOneById(ctx.request.body.id);
+                await this.userAuth.createQueryBuilder('userAuth').where('userAuth.user = ' + ctx.request.body.id).andWhere('userAuth.deleted <> 1').getOne();
             user.rank = ctx.request.body.rank;
             const res = await this.userAuth.persist(user);
             ctx.body = !!res;
@@ -193,7 +193,7 @@ export class UserController extends ApiController<User> {
             } else {
                 userId = false;
             }
-            const user = await this.db.findOneById(userId);
+            const user = await this.query(false).where(this.whereEqual('user', userId)).andWhere(this.column('deleted') + '<> 1').getOne();
             user.addresses.push(ctx.request.body.address);
             const res = await this.db.persist(user);
             ctx.body = !!res;

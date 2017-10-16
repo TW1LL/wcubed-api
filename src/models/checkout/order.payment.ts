@@ -22,4 +22,7 @@ export class Payment {
 
     @Column('text', { nullable: true})
     public balanceTrans: string;
+
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
 }

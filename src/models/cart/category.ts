@@ -16,4 +16,7 @@ export class Category {
 
     @OneToMany((type) => Product, (product) => product.category)
     public products: Product[];
+
+    @Column({type:'tinyint', default: 0})
+    public deleted?: number;
 }
