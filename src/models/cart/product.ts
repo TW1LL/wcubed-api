@@ -31,13 +31,13 @@ export class Product {
     @Column('decimal')
     public weight: number;
 
-    @Column('varchar')
+    @Column({type:'varchar',default: 'false'})
     public digital: boolean;
 
     @Column('int')
     public onHand: number;
 
-    @Column('varchar')
+    @Column({type:'varchar',default: 'false'})
     public hidden: boolean;
 
     @Column('float')
