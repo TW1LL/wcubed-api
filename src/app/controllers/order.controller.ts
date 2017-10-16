@@ -19,7 +19,7 @@ export default class OrderController extends ApiController<Order> {
                 fn: this.createOrder
             },
             {
-                path: 'order/user',
+                path: '/order/user',
                 method: 'get',
                 fn: this.getOrdersForUser
             }
