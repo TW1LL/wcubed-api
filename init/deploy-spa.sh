@@ -1,3 +1,3 @@
 cd /var/node/wcubed-spa
 git pull
-ng build -prod
+ng build -env=prod --output-hashing none
