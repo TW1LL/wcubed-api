@@ -35,13 +35,15 @@ export function deploySpa(ctx: Context) {
        if (error) {
            logger.error(error);
        }
-        exec('sh init/cp-spa.sh', function(error, stdout, stderror) {
-            logger.log(stdout);
-            logger.error(stderror);
-            if (error) {
-                logger.error(error);
-            }
-        });
+       if (!stderror) {
+           exec('sh init/cp-spa.sh', function (error, stdout, stderror) {
+               logger.log(stdout);
+               logger.error(stderror);
+               if (error) {
+                   logger.error(error);
+               }
+           });
+       }
     });
 
 
