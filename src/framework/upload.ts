@@ -13,11 +13,10 @@ export async function upload(ctx: Context, db: Connection) {
 
         const file = ctx.request.body.files.image;
         const type = ctx.params.type;
-        uploadImage(file, type).then(() => {
-            ctx.body = {
-                result: 'uploading'
-            }
-        });
+        await uploadImage(file, type);
+        ctx.body = {
+            result: 'uploading'
+        };
 
 
     } else {
@@ -26,12 +25,15 @@ export async function upload(ctx: Context, db: Connection) {
 
 }
 
-function uploadImage(file, type) {
+async function uploadImage(file, type) {
     return new Promise((resolve) => {
         logger.log('UPLOAD >> ' + type);
         const reader = fs.createReadStream(file.path);
         const stream = fs.createWriteStream(path.join('/var/www/wcubed-spa/assets/images', type, file.name));
         reader.pipe(stream);
-        resolve(true);
+        reader.on('finish', () => {
+            resolve(true);
+        })
+
     })
 }
