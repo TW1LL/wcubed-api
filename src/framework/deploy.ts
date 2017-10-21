@@ -1,6 +1,7 @@
 import {Context} from 'koa';
 import {Connection} from 'typeorm';
 import {logger} from '../utils/logger';
+import * as fs from 'fs';
 const exec = require('child_process').exec;
 
 export function deploy(ctx: Context, db: Connection) {
@@ -35,7 +36,10 @@ export function deploySpa(ctx: Context) {
        if (error) {
            logger.error(error);
        }
-       if (!stderror) {
+       else if (!fs.existsSync("/var/node/wcubed-spa/dist")){
+           logger.error("Distribution directory doesn't exist")
+       }
+       else {
            exec('sh init/cp-spa.sh', function (error, stdout, stderror) {
                logger.log(stdout);
                logger.error(stderror);
