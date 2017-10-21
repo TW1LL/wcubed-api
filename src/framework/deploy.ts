@@ -46,6 +46,9 @@ export function deploySpa(ctx: Context) {
                if (error) {
                    logger.error(error);
                }
+               else if (!stderror){
+                   logger.log("Successfully Deployed");
+               }
            });
        }
     });
