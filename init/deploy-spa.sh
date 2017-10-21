@@ -1,3 +1,5 @@
-cd /var/node/wcubed-spi
+cd /var/node/wcubed-spa
 git pull
-ng build
+rm /src/environment.ts
+mv /src/environment.prod.ts /src/environment.ts
+ng build -prod
