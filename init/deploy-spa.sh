@@ -1,5 +1,5 @@
 cd /var/node/wcubed-spa
 git pull
-rm src/environment.ts
-mv src/environment.prod.ts /src/environment.ts
+rm /var/node/wcubed-spa/src/environment.ts
+mv /var/node/wcubed-spa/src/environment.prod.ts /var/node/wcubed-spa/src/environment.ts
 ng build -prod
