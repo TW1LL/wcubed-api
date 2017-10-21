@@ -8,14 +8,15 @@ import {Connection} from 'typeorm';
 
 export async function upload(ctx: Context, db: Connection) {
     const userAuth = db.getRepository(UserAuth);
+    ctx.body = {
+        result: 'uploading'
+    };
     const [valid, user] = await new Auth(ctx, userAuth).authorized(rankTitle.Mod);
     if (valid) {
         const file = ctx.request.body.files.image;
         const type = ctx.params.type;
         await uploadImage(file, type);
-        ctx.body = {
-            result: 'uploading'
-        };
+
 
 
     } else {
