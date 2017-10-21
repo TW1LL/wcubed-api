@@ -29,8 +29,9 @@ async function uploadImage(file, type) {
         const reader = fs.createReadStream(file.path);
         const stream = fs.createWriteStream(path.join('/var/www/wcubed-spa/assets/images', type, file.name));
         reader.pipe(stream);
+        logger.log('UPLOAD >> ' + type);
         reader.on('finish', () => {
-            logger.log('UPLOAD >> ' + type);
+
             resolve(true);
         })
 
