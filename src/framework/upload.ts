@@ -17,7 +17,7 @@ export async function upload(ctx: Context, db: Connection) {
         const type = ctx.params.type;
         logger.log('UPLOAD >> ' + type);
         const reader = fs.createReadStream(file.path);
-        const stream = fs.createWriteStream(path.join('../wcubed-spa/src/assets/images', type, file.name));
+        const stream = fs.createWriteStream(path.join('/var/www/wcubed-spa/assets/images', type, file.name));
         reader.pipe(stream);
     } else {
         ctx.body = false;
