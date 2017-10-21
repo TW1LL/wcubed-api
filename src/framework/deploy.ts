@@ -41,8 +41,6 @@ export function deploySpa(ctx: Context) {
        }
        else {
            exec('sh init/cp-spa.sh', function (error, stdout, stderror) {
-               logger.log(stdout);
-               logger.error(stderror);
                if (error) {
                    logger.error(error);
                }
