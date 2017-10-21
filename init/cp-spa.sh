@@ -1,0 +1,1 @@
+cp -R /var/node/wcubed-spa/dist /var/www/wcubed-spa

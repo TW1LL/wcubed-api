@@ -22,3 +22,27 @@ export function deploy(ctx: Context, db: Connection) {
     });
 
 }
+
+
+export function deploySpa(ctx: Context) {
+    ctx.body = {
+        result: 'Deploying new SPA'
+    };
+    logger.log('Received spa deployment call');
+    exec('sh init/deploy-spa.sh', function(error, stdout, stderror) {
+       logger.log(stdout);
+       logger.error(stderror);
+       if (error) {
+           logger.error(error);
+       }
+        exec('sh init/cp-spa.sh', function(error, stdout, stderror) {
+            logger.log(stdout);
+            logger.error(stderror);
+            if (error) {
+                logger.error(error);
+            }
+        });
+    });
+
+
+}
