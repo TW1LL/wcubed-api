@@ -87,12 +87,10 @@ export default class OrderController extends ApiController<Order> {
         const [valid, usr] = await new Auth(ctx, this.userAuth).authorized(rankTitle.User);
         if (valid) {
             const order: Order = await this.query(true).where('orders.id = ' + ctx.request.body.orderId).andWhere('orders.deleted <> 1').getOne();
-            logger.log(order);
             order.items.forEach((item) => {
                 item.product.onHand =  item.product.onHand - item.quantity;
             })
             const res = await this.db.persist(order);
-            logger.log(res);
             ctx.body = res;
             if (!!res) {
                 logger.info('API >> FINALIZE ORDER SUCCESS AUTH');
