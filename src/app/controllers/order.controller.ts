@@ -90,6 +90,7 @@ export default class OrderController extends ApiController<Order> {
             order.items.forEach((item) => {
                 item.product.onHand =  item.product.onHand - item.quantity;
             })
+            order.confirmNumber = Date.now().toString();
             const res = await this.db.persist(order);
             ctx.body = res;
             if (!!res) {

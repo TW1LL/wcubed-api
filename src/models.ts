@@ -265,6 +265,8 @@ import {
 
          public total: number;
 
+         public confirmNumber?: string;
+
          public deleted?: number;
 }
 

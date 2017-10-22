@@ -43,6 +43,9 @@ export class Order {
     @Column('decimal')
     public total: number;
 
+    @Column({type:'varchar', default: ''})
+    public confirmNumber?: string;
+
     @Column({type:'tinyint', default: 0})
     public deleted?: number;
 }
