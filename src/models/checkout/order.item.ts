@@ -20,7 +20,7 @@ export class OrderItem {
     @Column('int')
     public quantity: number;
 
-    @ManyToOne((type) => Product, (product) => product.orderItems)
+    @ManyToOne((type) => Product, (product) => product.orderItems, {cascadeUpdate: true})
     @JoinColumn()
     public product: Product;
 

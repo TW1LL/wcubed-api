@@ -8,7 +8,7 @@ import {logger} from '../../utils/logger';
 import {User} from '../../models/account/user';
 export default class OrderController extends ApiController<Order> {
     userRepo: any;
-
+    productRepo: any;
     constructor(db: Connection) {
         super(db, 'orders', Order);
         this.userRepo = db.getRepository(User);
