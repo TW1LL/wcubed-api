@@ -25,7 +25,7 @@ export default class OrderController extends ApiController<Order> {
             },
             {
                 path: '/order/finalize',
-                method: 'get',
+                method: 'post',
                 fn: this.finalizeOrder
             }
         ]
