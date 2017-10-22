@@ -22,6 +22,11 @@ export default class OrderController extends ApiController<Order> {
                 path: '/order/user',
                 method: 'get',
                 fn: this.getOrdersForUser
+            },
+            {
+                path: '/order/finalize',
+                method: 'get',
+                fn: this.finalizeOrder
             }
         ]
     }
@@ -73,5 +78,24 @@ export default class OrderController extends ApiController<Order> {
             description += ' and ' + (order.items.length - 1) + ' other items';
         }
         return description;
+    }
+
+    finalizeOrder = async (ctx: Context) => {
+        const [valid, usr] = await new Auth(ctx, this.userAuth).authorized(rankTitle.User);
+        if (valid) {
+            const order: Order = await this.query(true).where('orders.id = ' + ctx.request.body.orderId).andWhere('orders.deleted <> 1').getOne();
+            order.items.forEach((item) => {
+                item.product.onHand =  item.product.onHand - item.quantity;
+            })
+            const res = await this.db.persist(order);
+            ctx.body = res;
+            if (!!res) {
+                logger.info('API >> FINALIZE ORDER SUCCESS AUTH');
+            } else {
+                logger.info('API >> FINALIZE ORDER FAILED AUTH');
+            }
+        } else {
+            logger.info('API >> FINALIZE ORDER FAILED UNAUTH');
+        }
     }
 }
