@@ -6,6 +6,8 @@ import {Auth} from '../../framework/auth';
 import {Context} from 'koa';
 import {logger} from '../../utils/logger';
 import {User} from '../../models/account/user';
+import {Product} from '../../models/cart/product';
+import {OrderItem} from '../../models/checkout/order.item';
 export default class OrderController extends ApiController<Order> {
     userRepo: any;
     productRepo: any;
@@ -44,6 +46,7 @@ export default class OrderController extends ApiController<Order> {
     createOrder = async (ctx: Context) => {
         logger.log('ORDER >> CREATE');
         const order: Order = ctx.request.body;
+        order.items = this.stringifyImages(order.items);
         const [valid, usr] = await new Auth(ctx, this.userAuth).authorized(rankTitle.User);
         let user;
         if (!valid) {
@@ -99,5 +102,14 @@ export default class OrderController extends ApiController<Order> {
         } else {
             logger.info('API >> FINALIZE ORDER FAILED UNAUTH');
         }
+    }
+
+    stringifyImages(items: OrderItem[]): OrderItem[] {
+        items = items.map((item) => {
+            item.product.images = JSON.stringify(item.product.images);
+            return item;
+        });
+
+        return items;
     }
 }
